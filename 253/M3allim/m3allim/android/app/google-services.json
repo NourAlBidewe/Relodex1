@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "730480669462",
+    "firebase_url": "https://wen-lmaalem.firebaseio.com",
+    "project_id": "wen-lmaalem",
+    "storage_bucket": "wen-lmaalem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730480669462:android:e3f14d9a38c3a238",
+        "android_client_info": {
+          "package_name": "com.example.m3allim"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730480669462-cjl2t8c6ohso048gvvm53htkdr0bql4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSz0N9vlp4NxQuqIlPZNQ10aBFDigzx78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730480669462:android:dfadb889fb5d45e5",
+        "android_client_info": {
+          "package_name": "com.rolodex1.wenlmaalem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730480669462-cjl2t8c6ohso048gvvm53htkdr0bql4k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSz0N9vlp4NxQuqIlPZNQ10aBFDigzx78"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
