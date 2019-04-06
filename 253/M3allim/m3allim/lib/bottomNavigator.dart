@@ -19,13 +19,14 @@ class _bottomNavigator extends State<bottomNavigator>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return CurvedNavigationBar(
+        color: Colors.white,
            initialIndex: 0,
           animationDuration: Duration(milliseconds: 150),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.deepPurpleAccent,
       items: <Widget>[
-        Icon(Icons.home, size: 30),
-        Icon(Icons.add, size: 30),
-        Icon(Icons.favorite, size: 30),
+        Icon(Icons.home, size: 30, color: Colors.deepPurpleAccent,),
+        Icon(Icons.add, size: 30, color: Colors.deepPurpleAccent),
+        //Icon(Icons.favorite, size: 30, color: Colors.white),
       ],
       onTap: (index) {
         
