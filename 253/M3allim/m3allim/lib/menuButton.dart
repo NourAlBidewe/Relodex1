@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import './displayCards.dart';
-import './serviceProvider.dart';
+import './Servicer.dart';
 
 
 class menubutton extends StatefulWidget {
-  List<serviceProvider> lst;
-  List<serviceProvider> fav;
+  List<Servicer> lst;
+  List<Servicer> fav;
   menubutton(this.lst, this.fav);
   @override
   State<StatefulWidget> createState() {
@@ -13,8 +13,8 @@ class menubutton extends StatefulWidget {
   }
 }
 class MenuButton extends State<menubutton>{
-  List<serviceProvider> lst;
-  List<serviceProvider> fav;
+  List<Servicer> lst;
+  List<Servicer> fav;
   List<String> _filters = ["المدينة","المسافة","التقييم"];
   bool val2 = false;
   MenuButton(this.lst, this.fav);
