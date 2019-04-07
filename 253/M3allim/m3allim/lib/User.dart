@@ -3,38 +3,46 @@ import 'package:m3allim/Person.dart';
 
 class User {
   String name, phone;
-  int age, calls;
+  int age, calls = 0;
   bool gender;
   GeoPoint location;
-
-//  Map<String, List<int>>
-  Map<dynamic, dynamic> ratings_badges;
-  List<Map<dynamic, dynamic>> favorites;
-
-  User(this.age, this.gender, this.location, this.name, this.phone,
-      this.ratings_badges, this.calls, this.favorites);
+  Map<dynamic, dynamic> ratings, favorites;
+  
+  User(this.age, this.gender, this.location, this.name, this.phone);
+  
+  // this is used by the database auto populator
+  User.fromList(List<String> lst) {
+    age = int.parse(lst[0]);
+    calls = int.parse(lst[1]);
+    favorites = json.decode(lst[2].replaceAll("'", '"'));
+    gender = lst[3] == "True";
+    location = GeoPoint(double.parse(lst[4].split(",")[0]), double.parse(lst[4].split(",")[1]));
+    name = lst[5];
+    phone = lst[6];
+    ratings = json.decode(lst[7].replaceAll("'", '"'));
+  }
 
   User.fromSnapshot(DocumentSnapshot snapshot) {
-    name = snapshot["name"];
-    phone = snapshot["phone"];
     age = snapshot["age"];
     calls = snapshot["calls"];
+    favorites = snapshot["favorites"];
     gender = snapshot["gender"];
     location = snapshot["location"];
-    ratings_badges = snapshot["ratings_badges"];
-    favorites = snapshot["favorites"];
+    name = snapshot["name"];
+    phone = snapshot["phone"];
+    ratings = snapshot["ratings"];
   }
 
   toJson() {
     return {
-      "name": name,
-      "phone": phone,
       "age": age,
       "calls": calls,
+      "favorites": favorites,
       "gender": gender,
       "location": location,
-      "ratings_badges": ratings_badges,
-      "favorites": favorites
+      "name": name,
+      "phone": phone,
+      "ratings": ratings
     };
   }
 }
