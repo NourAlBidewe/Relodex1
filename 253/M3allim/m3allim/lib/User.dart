@@ -23,14 +23,16 @@ class User {
   }
 
   User.fromSnapshot(DocumentSnapshot snapshot) {
-    age = snapshot["age"];
-    calls = snapshot["calls"];
-    favorites = snapshot["favorites"];
-    gender = snapshot["gender"];
-    location = snapshot["location"];
-    name = snapshot["name"];
-    phone = snapshot["phone"];
-    ratings = snapshot["ratings"];
+    if (snapshot["phone"] != null) {
+      age = snapshot["age"];
+      calls = snapshot["calls"];
+      favorites = snapshot["favorites"];
+      gender = snapshot["gender"];
+      location = snapshot["location"];
+      name = snapshot["name"];
+      phone = snapshot["phone"];
+      ratings = snapshot["ratings"];
+    }
   }
 
   toJson() {
