@@ -8,6 +8,7 @@ class User {
   GeoPoint location;
   Map<dynamic, dynamic> ratings, favorites;
   
+  // fields to be initialized at the moment of creating
   User(this.age, this.gender, this.location, this.name, this.phone);
   
   // this is used by the database auto populator
