@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'Servicer.dart';
 
 import './bottomNavigator.dart';
 
@@ -19,50 +20,6 @@ List<String> fields = [
   "description",
   "age"
 ];
-
-class Servicer {
-  String name, phone, address, email, prof_path, description;
-  double average_rating;
-  List<int> badges = new List<int>(3);
-  List<String> images;
-  bool gender;
-  int age, number_rates, calls;
-  Position location;
-
-  Servicer(
-      this.address,
-      this.age,
-      this.average_rating,
-      this.badges,
-      this.calls,
-      this.description,
-      this.email,
-      this.gender,
-      this.images,
-      this.location,
-      this.name,
-      this.number_rates,
-      this.phone,
-      this.prof_path);
-  toJson() {
-    return {
-      "address": address,
-      "age": age,
-      "average_rating": average_rating,
-      "badges": badges,
-      "calls": calls,
-      "description": description,
-      "email": email,
-      "gender": gender,
-      "images": images,
-      "location": location,
-      "name": name,
-      "number_rates": number_rates,
-      "phone": phone,
-      "prof_path": prof_path
-    };
-  }
-}
 
 var images = [
   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Berries.jpg?alt=media&token=6b61b7b2-9375-4b58-bbcd-8116027ff260',
@@ -299,6 +256,9 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("Arsel"),
                         highlightElevation: 2.0,
                         onPressed: () {
+                          //
+                          //        USE the imported class methods, dont copy codes from it
+                          //
                           Servicer p = new Servicer("", 23, 4, [], 3, "Kabirr", emailController.text, true, images, Position(), nameController.text, 4, phoneController.text, "teacher");
                           String path = (p is Servicer) ? "Users" : "Service providers/" + p.prof_path;
                           Firestore.instance.document(path + "/961-${p.phone}").setData(p.toJson());
