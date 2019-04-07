@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import './serviceProvider.dart';
+import './Servicer.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import './displayServiceProvider.dart';
 class ServiceDisplay extends StatelessWidget{
-   List<serviceProvider> lst ;
+   List<Servicer> lst ;
 
    ServiceDisplay(list){
         this.lst= list;
