@@ -123,7 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.deepPurple,
         elevation: 0.0,
         title: Text(
           'UPLOAD',
@@ -133,14 +133,14 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          color: Colors.black,
+          color: Colors.white,
           iconSize: 17.0,
           onPressed: () {},
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            color: Colors.black,
+            color: Colors.white,
             iconSize: 17.0,
             onPressed: () {},
           ),
@@ -180,9 +180,14 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     }).toList(),
             ),
-            Padding(
+          Padding(
               padding: EdgeInsets.all(10.0),
-              child: TextField(
+
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: Colors.deepPurple,
+                ),
+                child: TextField(               
                 controller: nameController,
                 textDirection: TextDirection.rtl,
                 autocorrect: false,
@@ -190,18 +195,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 // textInputAction: ,
                 textAlign: TextAlign.right,
                 keyboardType: TextInputType.text,
-
                 decoration: new InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    
+                  ),        
                   fillColor: Colors.white,
                   filled: true,
                   labelText: "الاسم الكامل",
                 ),
-              ),
+              ),)
             ),
+
             Padding(
               padding: EdgeInsets.all(10.0),
-              child: TextField(
+              child: Theme(
+                data: ThemeData(
+                  primaryColor: Colors.deepPurple,
+                ),
+                child: TextField(
                 controller: phoneController,
                 textDirection: TextDirection.rtl,
                 autocorrect: false,
@@ -217,11 +228,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   labelText: "رقم الهاتف",
                   prefixText: '961-',
                 ),
-              ),
+              ),)
             ),
+
             Padding(
               padding: EdgeInsets.all(10.0),
-              child: TextField(
+              child: Theme(
+                data: ThemeData(primaryColor: Colors.deepPurple,),
+                child: TextField(
                 controller: emailController,
                 textDirection: TextDirection.rtl,
                 autocorrect: false,
@@ -237,7 +251,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   labelText: "البريد الالكتروني",
                 ),
               ),
+              )
             ),
+
             ListTile(
               trailing: DropdownButton(
                 value: _selectedMenuValue,
