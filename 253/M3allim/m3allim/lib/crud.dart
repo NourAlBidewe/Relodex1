@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
   
 import './User.dart';
-import './serviceProvider.dart';
+import './ServiceProvider.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -20,7 +20,7 @@ class fb {
 //  sorting_criteria is either by "rating" or "distance"
 //  us is which user is requesting the list, helpful now and later
   static getnServiceProviders(String category, String subCategory, int n, String sorting_criteria, bool descending, User us) async {
-    CollectionReference cr = Firestore.instance.collection(category).where("prof_path", isEqualTo: "$category/$subCategory");
+    Query cr = Firestore.instance.collection(category).where("prof_path", isEqualTo: "$category/$subCategory");
     QuerySnapshot out = sorting_criteria == "distance"
         ? await cr.limit(n).getDocuments()
         : await cr.orderBy("average_rating", descending: descending).limit(n).getDocuments();
@@ -30,7 +30,7 @@ class fb {
     if (sorting_criteria == "distance") {
       for (ServiceProvider sv in lst)
         sv.distance = getDistance(sv, us);
-      lst.sort((ServiceProvider a, ServiceProvider b) => a.distance.compareTo(b.distance));
+      lst.sort((ServiceProvider a, ServiceProvider b) => (descending?-1:1)*a.distance.compareTo(b.distance));
     }
     lst.sublist(min(lst.length, n));
     return lst;
@@ -58,31 +58,41 @@ class fb {
   }
 
   static updateServiceProviderStars(ServiceProvider sv, User us, int num_stars) {
-    String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
-    DocumentReference dr = Firestore.instance.document(path);
-    dr.get().then((out) {
-      sv.number_rates = out["number_rates"];
-      sv.average_rating =
-          (out["average_rating"] * sv.number_rates + num_stars) /
-              (sv.number_rates + 1);
-      sv.number_rates += 1;
-      dr.updateData({
-        "average_rating": sv.average_rating,
-        "number_rates": sv.number_rates
-      });
-    });
-    path = "Users/961-${us.phone}";
-    DocumentReference dr2 = Firestore.instance.document(path);
-    dr2.get().then((out) {
-      us.ratings = out["ratings"];
-      if (us.ratings[sv.phone] != null)
-        us.ratings[sv.phone]["stars"] = num_stars;
-      else
-        us.ratings.addAll({
-          sv.phone: {"badge": 0, "stars": num_stars}
+      String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
+      DocumentReference dr = Firestore.instance.document(path);
+      dr.get().then((out) {
+        sv.number_rates = out["number_rates"] - prev(sv, us, "stars");
+        sv.average_rating = (out["average_rating"] * sv.number_rates + num_stars) /
+                (sv.number_rates + 1);
+        sv.number_rates += 1;
+        dr.updateData({
+          "average_rating": sv.average_rating,
+          "number_rates": sv.number_rates
         });
-      dr2.updateData({"ratings": us.ratings});
-    });
+      });
+      path = "Users/961-${us.phone}";
+      DocumentReference dr2 = Firestore.instance.document(path);
+      dr2.get().then((out) {
+        us.ratings = out["ratings"];
+        if (us.ratings["961-${sv.phone}"] != null)
+          us.ratings["961-${sv.phone}"]["stars"] = num_stars;
+        else
+          us.ratings.addAll({
+            "961-${sv.phone}": {"badge": 0, "stars": num_stars}
+          });
+        dr2.updateData({"ratings": us.ratings});
+      });
+  }
+
+  static prev(ServiceProvider sv, User us, String rate) {
+    if (us.ratings["961-${sv.phone}"]==null)
+      return 0;
+    else {
+      if(us.ratings["961-${sv.phone}"][rate]==0)
+        return 0;
+      else
+        return 1;
+    }
   }
 
 //  badge_index 1 or 2 or 3
