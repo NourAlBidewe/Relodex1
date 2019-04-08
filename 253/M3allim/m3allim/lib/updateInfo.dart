@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
-import './serviceProvider.dart';
+import './ServiceProvider.dart';
 import './badge.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import './crud.dart';
 import './displayInfo.dart';
 import './displayServiceProvider.dart';
 
-serviceProvider sv;
+ServiceProvider sv;
 double raty = 0;
 bool badge1 = false;
 bool badge2 = false;
@@ -32,7 +32,7 @@ class UpdateInfo extends StatefulWidget {
     return _UpdateInfo();
   }
 
-  UpdateInfo(serviceProvider s) {
+  UpdateInfo(ServiceProvider s) {
     sv = s;
   }
 }
