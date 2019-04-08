@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>730480669462-62v3ug88v057v4tji1dvtn1jgq16ots2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.730480669462-62v3ug88v057v4tji1dvtn1jgq16ots2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyB7G_QmIfzeQm93TtumxuPJRC8PxXTLhtE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>730480669462</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.m3allim</string>
+	<key>PROJECT_ID</key>
+	<string>wen-lmaalem</string>
+	<key>STORAGE_BUCKET</key>
+	<string>wen-lmaalem.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:730480669462:ios:e3f14d9a38c3a238</string>
+	<key>DATABASE_URL</key>
+	<string>https://wen-lmaalem.firebaseio.com</string>
+</dict>
+</plist>
