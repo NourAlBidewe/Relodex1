@@ -12,7 +12,21 @@ class serviceProvider {
   GeoPoint location;
 
   // fields to be initialized at the moment of creating, the rest are to be filled by the servicer later on
-  serviceProvider(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
+  
+  serviceProvider(
+      this.address,
+      this.age,
+      this.average_rating,
+      this.badges,
+      this.email,
+      this.gender,
+      this.images,
+      this.name,
+      this.number_rates,
+      this.phone,
+      this.calls,
+      this.prof_path,
+      this.location);
 
   // this is used by the database auto populator
   serviceProvider.fromList(List<String> lst) {
