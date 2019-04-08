@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
-class Servicer {
+class serviceProvider {
   String name, phone, address, email, prof_path, description;
   double average_rating = 0, distance = 0;
   List<int> badges = [0, 0, 0];
@@ -12,10 +12,10 @@ class Servicer {
   GeoPoint location;
 
   // fields to be initialized at the moment of creating, the rest are to be filled by the servicer later on
-  Servicer(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
+  serviceProvider(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
 
   // this is used by the database auto populator
-  Servicer.fromList(List<String> lst) {
+  serviceProvider.fromList(List<String> lst) {
     address = lst[0];
     age = int.parse(lst[1]);
     average_rating = double.parse(lst[2]);
@@ -32,7 +32,7 @@ class Servicer {
     prof_path = lst[13];
   }
 
-  Servicer.fromSnapshot(DocumentSnapshot snapshot) {
+  serviceProvider.fromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot["phone"] != null) {
       address = snapshot["address"];
       age = snapshot["age"];
