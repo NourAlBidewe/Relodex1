@@ -3,9 +3,9 @@ import './actionButton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './crud.dart';
-import './serviceProvider.dart';
+import './ServiceProvider.dart';
 
-serviceProvider sv;
+ServiceProvider sv;
 
 class Actions extends StatefulWidget {
   @override
@@ -13,7 +13,7 @@ class Actions extends StatefulWidget {
     return _Actions();
   }
 
-  Actions(serviceProvider s) {
+  Actions(ServiceProvider s) {
     sv = s;
   }
 }
