@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import './serviceProvider.dart';
+import './ServiceProvider.dart';
 import './Doha.dart';
 
 
@@ -14,11 +14,11 @@ import 'reemApp.dart';
 
 // void main(){
 
-//     var reem = serviceProvider('راس بيروت', 29, 3.0, [1,5,10], "xx", true, ["hello"], "محمد فواخرجي", 9, '70922772', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var rami =  serviceProvider('حمرا', 29, 3.9, [6,5,9], "xx", true, ["hello"], "علي العلبي", 9, '71089778', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var sundus = serviceProvider('مار الياس', 29, 4.0, [0,1,3], "xx", true, ["hello"], "راما بديوي", 9, '78765234', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var nadeem =serviceProvider('حي السلم', 29, 2.0, [1,2,7], "xx", true, ["hello"], "مازن قانصو", 9, '03123446', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   List<serviceProvider> prof = [reem,rami,sundus,nadeem];
+//     var reem = ServiceProvider('راس بيروت', 29, 3.0, [1,5,10], "xx", true, ["hello"], "محمد فواخرجي", 9, '70922772', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var rami =  ServiceProvider('حمرا', 29, 3.9, [6,5,9], "xx", true, ["hello"], "علي العلبي", 9, '71089778', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var sundus = ServiceProvider('مار الياس', 29, 4.0, [0,1,3], "xx", true, ["hello"], "راما بديوي", 9, '78765234', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var nadeem =ServiceProvider('حي السلم', 29, 2.0, [1,2,7], "xx", true, ["hello"], "مازن قانصو", 9, '03123446', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   List<ServiceProvider> prof = [reem,rami,sundus,nadeem];
 //   return runApp(Myapp(prof));
 // }
 
