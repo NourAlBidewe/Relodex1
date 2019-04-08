@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
-import './serviceProvider.dart';
+import './ServiceProvider.dart';
 import './crud.dart';
 
 
@@ -11,7 +11,7 @@ class Badge extends StatefulWidget {
 
   //bool badgeAlreadyPressed = false;
   int badgeNum;
-  serviceProvider sv;
+  ServiceProvider sv;
   String onClicked;
   String tag;
   String text;
@@ -47,7 +47,7 @@ class _Badge extends State<Badge> {
   String newImagePath;
   int badgeNum;
   bool isPressed = false;
-  serviceProvider s;
+  ServiceProvider s;
   String tag;
   String text;
 
