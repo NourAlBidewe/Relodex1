@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:m3allim/bottomNavigator.dart';
-import 'package:m3allim/serviceProvider.dart';
+import 'package:m3allim/ServiceProvider.dart';
 import './Categories.dart';
 import './designCard.dart';
 import './test.dart';
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                                 builder: (context) =>
                                     card(c[c.keys.elementAt(index)])));
                       } else {
-                        var reem = serviceProvider(
+                        var reem = ServiceProvider(
                             'راس بيروت',
                             29,
                             3.0,
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
                             6,
                             "blacksmiths/Blacksmiths",
                             GeoPoint(33, 33));
-                        var rami = serviceProvider(
+                        var rami = ServiceProvider(
                             'حمرا',
                             29,
                             3.9,
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
                             6,
                             "blacksmiths/Blacksmiths",
                             GeoPoint(33, 33));
-                        var sundus = serviceProvider(
+                        var sundus = ServiceProvider(
                             'مار الياس',
                             29,
                             4.0,
@@ -90,7 +90,7 @@ class MyApp extends StatelessWidget {
                             6,
                             "blacksmiths/Blacksmiths",
                             GeoPoint(33, 33));
-                        var nadeem = serviceProvider(
+                        var nadeem = ServiceProvider(
                             'حي السلم',
                             29,
                             2.0,
@@ -104,13 +104,13 @@ class MyApp extends StatelessWidget {
                             6,
                             "blacksmiths/Blacksmiths",
                             GeoPoint(33, 33));
-                        List<serviceProvider> prof = [
+                        List<ServiceProvider> prof = [
                           reem,
                           rami,
                           sundus,
                           nadeem
                         ];
-                        // List<serviceProvider> list = await fb.getServicers('blacksmiths/Blacksmiths');
+                        // List<ServiceProvider> list = await fb.getServicers('blacksmiths/Blacksmiths');
                         Navigator.push(
                             context,
                             MaterialPageRoute(
