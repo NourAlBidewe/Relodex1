@@ -2,34 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-
 class ServiceProvider {
-  String name, phone, address, email, prof_path, description;
+  String name, phone, address, email = "", prof_path, description = "";
   double average_rating = 0, distance = 0;
   List<int> badges = [0, 0, 0];
-  List<String> images;
+  List<String> images = List();
   bool gender;
   int age, number_rates = 0, calls = 0;
   GeoPoint location;
 
-  // fields to be initialized at the moment of creating, the rest are to be filled by the servicer later on
-  
-  ServiceProvider(
-      this.address,
-      this.age,
-      this.average_rating,
-      this.badges,
-      this.email,
-      this.gender,
-      this.images,
-      this.name,
-      this.number_rates,
-      this.phone,
-      this.calls,
-      this.prof_path,
-      this.location);
+//  address as string, location as a function call which returns a GeoPoint object, corresponding to the address
+  ServiceProvider(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
 
-  // this is used by the database auto populator
+//   used by database auto populator only
   ServiceProvider.fromList(List<String> lst) {
     address = lst[0];
     age = int.parse(lst[1]);
