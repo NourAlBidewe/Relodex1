@@ -32,10 +32,10 @@ class _Myapp extends StatelessWidget{
  Widget build(BuildContext context) {
     return  Scaffold(
 
-        appBar: AppBar(backgroundColor: Colors.white, actions: <Widget>[
+        appBar: AppBar(backgroundColor: Colors.deepPurple, actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            color: Colors.black,
+            color: Colors.white,
             iconSize: 17.0,
             onPressed: () {},
           ),
