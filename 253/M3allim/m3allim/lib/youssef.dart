@@ -289,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       iconSize: 70.0,
                       icon: Icon(
                         Icons.gps_fixed,
-                        color: Colors.black,
+                        color: Colors.deepPurple,
                       ),
                       onPressed: () async {
                         // var x = _getLocation();
@@ -308,7 +308,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       iconSize: 70.0,
                       icon: Icon(
                         Icons.camera,
-                        color: Colors.black,
+                        color: Colors.deepPurple,
                       ),
                       onPressed: () {
                         _pickImageFromCamera();
