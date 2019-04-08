@@ -18,18 +18,18 @@ class fb {
 //  when called, the method where it is called should be async, and put "await" before the call
 //  sorting_criteria is either by "rating" or "distance"
 //  us is which user is requesting the list, helpful now and later
-  static getnServicers(String category, String subCategory, int n, String sorting_criteria, bool descending, User us) async {
+  static getnServiceProviders(String category, String subCategory, int n, String sorting_criteria, bool descending, User us) async {
     CollectionReference cr = Firestore.instance.collection(category).where("prof_path", isEqualTo: "$category/$subCategory");
     QuerySnapshot out = sorting_criteria == "distance"
         ? await cr.limit(n).getDocuments()
         : await cr.orderBy("average_rating", descending: descending).limit(n).getDocuments();
-    List<Servicer> lst = new List<Servicer>();
+    List<ServiceProvider> lst = new List<ServiceProvider>();
     for (DocumentSnapshot ds in out.documents)
-      lst.add(Servicer.fromSnapshot(ds));
+      lst.add(ServiceProvider.fromSnapshot(ds));
     if (sorting_criteria == "distance") {
-      for (Servicer sv in lst)
+      for (ServiceProvider sv in lst)
         sv.distance = getDistance(sv, us);
-      lst.sort((Servicer a, Servicer b) => a.distance.compareTo(b.distance));
+      lst.sort((ServiceProvider a, ServiceProvider b) => a.distance.compareTo(b.distance));
     }
     lst.sublist(min(lst.length, n));
     return lst;
@@ -37,7 +37,7 @@ class fb {
 
 //  distance is in meters
 //  6371000 is earth's mean radius in meters
-  static getDistance(Servicer sv, User us) {
+  static getDistance(ServiceProvider sv, User us) {
     double svLat = sv.location.latitude, svLon = sv.location.longitude;
     double usLat = us.location.latitude, usLon = us.location.longitude;
     double latDif = (svLat - usLat), lonDif = (svLon - usLon);
@@ -56,7 +56,7 @@ class fb {
     Firestore.instance.document(path).delete();
   }
 
-  static updateServicerStars(Servicer sv, User us, int num_stars) {
+  static updateServiceProviderStars(ServiceProvider sv, User us, int num_stars) {
     String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
     DocumentReference dr = Firestore.instance.document(path);
     dr.get().then((out) {
@@ -85,7 +85,7 @@ class fb {
   }
 
 //  badge_index 1 or 2 or 3
-  static incrementServicerBadges(Servicer sv, User us, int badge_index) {
+  static incrementServiceProviderBadges(ServiceProvider sv, User us, int badge_index) {
     String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
     sv.badges[badge_index - 1] += 1;
     DocumentReference dr = Firestore.instance.document(path);
@@ -119,7 +119,7 @@ class fb {
     });
   }
 
-  static addFavorite(User us, Servicer sv) {
+  static addFavorite(User us, ServiceProvider sv) {
     String path = "Users/961-${us.phone}";
     DocumentReference dr = Firestore.instance.document(path);
     dr.get().then((out) {
@@ -131,7 +131,7 @@ class fb {
   static getFavorites(User us) async {
     String path = "Users/961-${us.phone}";
     DocumentSnapshot qs = await Firestore.instance.document(path).get();
-    List<Servicer> lst = List();
+    List<ServiceProvider> lst = List();
     Map<String, List<String>> m = Map();
     for (String s in qs["favorites"].keys) {
       if (m[qs["favorites"][s].split("/")[0]] != null)
@@ -146,11 +146,11 @@ class fb {
         QuerySnapshot qs = await Firestore.instance.collection(s).where(
             "phone", isEqualTo: num.split("-")[1]).getDocuments();
         if (qs.documents.length != 0)
-          lst.add(Servicer.fromSnapshot(qs.documents[0]));
+          lst.add(ServiceProvider.fromSnapshot(qs.documents[0]));
       }
     }
     return lst;
   }
 
-  static addImage(Servicer sv, Image img) {}
+  static addImage(ServiceProvider sv, Image img) {}
 }
