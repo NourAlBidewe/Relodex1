@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 
-class serviceProvider {
+class ServiceProvider {
   String name, phone, address, email, prof_path, description;
   double average_rating = 0, distance = 0;
   List<int> badges = [0, 0, 0];
@@ -14,7 +14,7 @@ class serviceProvider {
 
   // fields to be initialized at the moment of creating, the rest are to be filled by the servicer later on
   
-  serviceProvider(
+  ServiceProvider(
       this.address,
       this.age,
       this.average_rating,
@@ -30,7 +30,7 @@ class serviceProvider {
       this.location);
 
   // this is used by the database auto populator
-  serviceProvider.fromList(List<String> lst) {
+  ServiceProvider.fromList(List<String> lst) {
     address = lst[0];
     age = int.parse(lst[1]);
     average_rating = double.parse(lst[2]);
@@ -47,7 +47,7 @@ class serviceProvider {
     prof_path = lst[13];
   }
 
-  serviceProvider.fromSnapshot(DocumentSnapshot snapshot) {
+  ServiceProvider.fromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot["phone"] != null) {
       address = snapshot["address"];
       age = snapshot["age"];
