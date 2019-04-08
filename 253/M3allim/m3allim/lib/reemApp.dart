@@ -22,11 +22,11 @@ class MyApp extends StatelessWidget {
         title: title,
         home: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.deepPurple,
             actions: <Widget>[
               IconButton(
                 icon: Icon(Icons.search),
-                color: Colors.black,
+                color: Colors.white,
                 iconSize: 17.0,
                 onPressed: () {},
               ),
