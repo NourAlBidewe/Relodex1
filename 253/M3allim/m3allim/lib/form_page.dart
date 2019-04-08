@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:m3allim/displayServiceProvider.dart';
-import 'package:m3allim/Servicer.dart';
+import 'package:m3allim/serviceProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -35,14 +35,14 @@ class _FormPageState extends State<FormPage> {
   }
 
 
-  // Servicer s = Servicer("ابو علي", 4.1, "بيروت", 22.3, "+96176661878", 'ميكانيكي', [1,2,4]);
-  //Servicer s = 
+  // serviceProvider s = serviceProvider("ابو علي", 4.1, "بيروت", 22.3, "+96176661878", 'ميكانيكي', [1,2,4]);
+  //service_provider s = 
   //List<User> listy = getServiceProviders('blacksmiths/Blacksmiths');
   //static var x = listy[0];
   // print
-  //Servicer s = listy[0];
+  //serviceProvider s = listy[0];
 
-  Servicer s = Servicer('بيروت', 29, 3, [1,4,8], "xx", true, ["hello"], "النجار ابو علي", 9, '12664237', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+  serviceProvider s = serviceProvider('بيروت', 29, 3, [1,4,8], "xx", true, ["hello"], "النجار ابو علي", 9, '12664237', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
  
 
 

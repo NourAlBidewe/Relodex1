@@ -3,9 +3,9 @@ import './actionButton.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import './crud.dart';
-import './Servicer.dart';
+import './serviceProvider.dart';
 
-Servicer sv;
+serviceProvider sv;
 
 class Actions extends StatefulWidget {
   @override

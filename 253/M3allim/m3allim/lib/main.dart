@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import './Servicer.dart';
+import './serviceProvider.dart';
 import './Doha.dart';
 
 
@@ -14,10 +14,10 @@ import 'reemApp.dart';
 
 // void main(){
 
-//     var reem = Servicer('راس بيروت', 29, 3.0, [1,5,10], "xx", true, ["hello"], "محمد فواخرجي", 9, '70922772', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var rami =  Servicer('حمرا', 29, 3.9, [6,5,9], "xx", true, ["hello"], "علي العلبي", 9, '71089778', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var sundus = Servicer('مار الياس', 29, 4.0, [0,1,3], "xx", true, ["hello"], "راما بديوي", 9, '78765234', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
-//   var nadeem =Servicer('حي السلم', 29, 2.0, [1,2,7], "xx", true, ["hello"], "مازن قانصو", 9, '03123446', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//     var reem = serviceProvider('راس بيروت', 29, 3.0, [1,5,10], "xx", true, ["hello"], "محمد فواخرجي", 9, '70922772', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var rami =  serviceProvider('حمرا', 29, 3.9, [6,5,9], "xx", true, ["hello"], "علي العلبي", 9, '71089778', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var sundus = serviceProvider('مار الياس', 29, 4.0, [0,1,3], "xx", true, ["hello"], "راما بديوي", 9, '78765234', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+//   var nadeem =serviceProvider('حي السلم', 29, 2.0, [1,2,7], "xx", true, ["hello"], "مازن قانصو", 9, '03123446', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
 //   List<serviceProvider> prof = [reem,rami,sundus,nadeem];
 //   return runApp(Myapp(prof));
 // }
@@ -40,8 +40,8 @@ void main() {
 }
 
   Map<Categories, List<Categories>> buildd(Map<String, List<String>> servicers) {
-    Map<Categories, List<Categories>> c = Map();
-    for (String key in servicers.keys) {
+  Map<Categories, List<Categories>> c = Map();
+  for (String key in servicers.keys) {
     Categories v, k = Categories(key.split(",")[0], key.split(",")[1], servicers[key].length > 1);
     for (String subs in servicers[key]) {
       v = Categories(subs.split(",")[0], subs.split(",")[1], false);

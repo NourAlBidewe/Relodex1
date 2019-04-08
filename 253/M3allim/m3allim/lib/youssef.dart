@@ -5,7 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'Servicer.dart';
 
 import './bottomNavigator.dart';
 
@@ -21,11 +20,58 @@ List<String> fields = [
   "age"
 ];
 
-var images = [
-  'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Berries.jpg?alt=media&token=6b61b7b2-9375-4b58-bbcd-8116027ff260',
-  'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Cup%20of%20Joe.jpg?alt=media&token=79780731-ff91-4ea3-a0d2-15f8109c7c6f',
-  'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Flowers.jpg?alt=media&token=df388aa2-ead2-4469-9284-d0870b027e3b'
-];
+class Servicer {
+  String name, phone, address, email, prof_path, description;
+  double average_rating;
+  List<int> badges = new List<int>(3);
+  List<String> images;
+  bool gender;
+  int age, number_rates, calls;
+  Position location;
+
+  Servicer(
+      this.address,
+      this.age,
+      this.average_rating,
+      this.badges,
+      this.calls,
+      this.description,
+      this.email,
+      this.gender,
+      this.images,
+      this.location,
+      this.name,
+      this.number_rates,
+      this.phone,
+      this.prof_path);
+  toJson() {
+    return {
+      "address": address,
+      "age": age,
+      "average_rating": average_rating,
+      "badges": badges,
+      "calls": calls,
+      "description": description,
+      "email": email,
+      "gender": gender,
+      "images": images,
+      "location": location,
+      "name": name,
+      "number_rates": number_rates,
+      "phone": phone,
+      "prof_path": prof_path
+    };
+  }
+}
+
+// var images = [
+//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Berries.jpg?alt=media&token=6b61b7b2-9375-4b58-bbcd-8116027ff260',
+//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Cup%20of%20Joe.jpg?alt=media&token=79780731-ff91-4ea3-a0d2-15f8109c7c6f',
+//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Flowers.jpg?alt=media&token=df388aa2-ead2-4469-9284-d0870b027e3b'
+// ];
+
+var images = [];
+var constImage = [Image.asset("assets/insertImage.png")];
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -62,15 +108,15 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<DropdownMenuItem<String>> _dropMenuItems = menuItems
       .map(
         (String value) =>
-        DropdownMenuItem<String>(value: value, child: Text(value)),
-  )
+            DropdownMenuItem<String>(value: value, child: Text(value)),
+      )
       .toList();
 
   final List<DropdownMenuItem<String>> _dropGenderItems = genterTypes
       .map(
         (String value) =>
-        DropdownMenuItem<String>(value: value, child: Text(value)),
-  )
+            DropdownMenuItem<String>(value: value, child: Text(value)),
+      )
       .toList();
 
   @override
@@ -107,18 +153,32 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 200,
               //autoPlayInterval: Duration(seconds: 2),
               //autoPlay: true,
-              items: images.map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      padding: EdgeInsets.only(top: 30, bottom: 30),
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Image.network(i),
-                    );
-                  },
-                );
-              }).toList(),
+              items: images.length == 0
+                  ? constImage.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: EdgeInsets.only(top: 30, bottom: 30),
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            // child: Image.network(i),
+                            child: Image.asset("assets/insertImage.png"),
+                          );
+                        },
+                      );
+                    }).toList()
+                  : images.map((i) {
+                      return Builder(
+                        builder: (BuildContext context) {
+                          return Container(
+                            padding: EdgeInsets.only(top: 30, bottom: 30),
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Image.file(i),
+                          );
+                        },
+                      );
+                    }).toList(),
             ),
             Padding(
               padding: EdgeInsets.all(10.0),
@@ -139,7 +199,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.all(10.0),
               child: TextField(
@@ -160,7 +219,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.all(10.0),
               child: TextField(
@@ -180,8 +238,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-
-
             ListTile(
               trailing: DropdownButton(
                 value: _selectedMenuValue,
@@ -194,7 +250,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: _dropMenuItems,
               ),
             ),
-
             ListTile(
               trailing: DropdownButton(
                 value: _selectedGenderValue,
@@ -207,14 +262,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: _dropGenderItems,
               ),
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 // Align(alignment: Alignment.bottomLeft,),
                 Padding(
                     padding:
-                    EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
+                        EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
                     child: IconButton(
                       iconSize: 70.0,
                       icon: Icon(
@@ -229,11 +283,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         print(position);
                       },
                     )
-                  // Align(alignment: Alignment.bottomRight,),
-                ),
+                    // Align(alignment: Alignment.bottomRight,),
+                    ),
                 Padding(
                     padding:
-                    EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
+                        EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
                     child: IconButton(
                       iconSize: 70.0,
                       icon: Icon(
@@ -256,12 +310,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("Arsel"),
                         highlightElevation: 2.0,
                         onPressed: () {
-                          //
-                          //        USE the imported class methods, dont copy codes from it
-                          //
-                          Servicer p = new Servicer("", 23, 4, [], 3, "Kabirr", emailController.text, true, images, Position(), nameController.text, 4, phoneController.text, "teacher");
-                          String path = (p is Servicer) ? "Users" : "Service providers/" + p.prof_path;
-                          Firestore.instance.document(path + "/961-${p.phone}").setData(p.toJson());
+                          Servicer p = new Servicer(
+                              "",
+                              23,
+                              4,
+                              [],
+                              3,
+                              "Kabirr",
+                              emailController.text,
+                              true,
+                              images,
+                              Position(),
+                              nameController.text,
+                              4,
+                              phoneController.text,
+                              "teacher");
+                          String path = (p is Servicer)
+                              ? "Users"
+                              : "Service providers/" + p.prof_path;
+                          Firestore.instance
+                              .document(path + "/961-${p.phone}")
+                              .setData(p.toJson());
                           // retreiveContents(textEditingControllers);
                         }),
                   ),
@@ -320,14 +389,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<Null> _pickImageFromGallery() async {
     final File imageFile =
-    await ImagePicker.pickImage(source: ImageSource.gallery);
+        await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() => this._imageFile = imageFile);
   }
 
   Future<Null> _pickImageFromCamera() async {
     final File imageFile =
-    await ImagePicker.pickImage(source: ImageSource.camera);
+        await ImagePicker.pickImage(source: ImageSource.camera);
     // print("Acess");
     setState(() => this._imageFile = imageFile);
+    images.add(imageFile);
   }
 }

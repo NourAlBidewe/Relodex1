@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-import './Servicer.dart';
+import './serviceProvider.dart';
 import './displayInfo.dart';
 import './actions.dart';
 import './home.dart';
@@ -11,7 +11,7 @@ import './youssef.dart';
 import './bottomNavigator.dart';
 
 
-Servicer sv;
+serviceProvider sv;
 //GIVE RATY TO FIREBASE
 class Display extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class Display extends StatefulWidget {
     return _Display();
   }
 
-  Display(Servicer serP) {
+  Display(serviceProvider serP) {
     sv = serP;
   }
 }

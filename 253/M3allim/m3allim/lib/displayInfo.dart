@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 
 
-import './Servicer.dart';
+import './serviceProvider.dart';
 
-Servicer sv;
+serviceProvider sv;
 
 class DisplayInfo extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class DisplayInfo extends StatefulWidget {
     return _DisplayInfo();
   }
 
-  DisplayInfo(Servicer s) {
+  DisplayInfo(serviceProvider s) {
     sv = s;
   }
 }
