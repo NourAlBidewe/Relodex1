@@ -78,6 +78,7 @@ flutter:
     - assets/mechanic.jpg
     - assets/kahrbge.jpg
     - assets/hadad.jpg
+    - assets/insertImage.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
