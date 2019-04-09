@@ -8,7 +8,6 @@ import 'dart:math';
 
 
 class fb {
-
 //  p is object (provider or user) to be added to database
   static add(var p) {
     String path = (p is User) ? "Users" : p.prof_path.split("/")[0];
@@ -19,18 +18,23 @@ class fb {
 //  when called, the method where it is called should be async, and put "await" before the call
 //  sorting_criteria is either by "rating" or "distance"
 //  us is which user is requesting the list, helpful now and later
-  static getnServiceProviders(String category, String subCategory, int n, String sorting_criteria, bool descending, User us) async {
-    Query cr = Firestore.instance.collection(category).where("prof_path", isEqualTo: "$category/$subCategory");
+  static getnServiceProviders(String category, String subCategory, int n,
+      String sorting_criteria, bool descending, User us) async {
+    Query cr = Firestore.instance
+        .collection(category)
+        .where("prof_path", isEqualTo: "$category/$subCategory");
     QuerySnapshot out = sorting_criteria == "distance"
         ? await cr.limit(n).getDocuments()
-        : await cr.orderBy("average_rating", descending: descending).limit(n).getDocuments();
+        : await cr
+            .orderBy("average_rating", descending: descending)
+            .limit(n).getDocuments();
     List<ServiceProvider> lst = new List<ServiceProvider>();
     for (DocumentSnapshot ds in out.documents)
       lst.add(ServiceProvider.fromSnapshot(ds));
     if (sorting_criteria == "distance") {
-      for (ServiceProvider sv in lst)
-        sv.distance = getDistance(sv, us);
-      lst.sort((ServiceProvider a, ServiceProvider b) => (descending?-1:1)*a.distance.compareTo(b.distance));
+      for (ServiceProvider sv in lst) sv.distance = getDistance(sv, us);
+      lst.sort((ServiceProvider a, ServiceProvider b) =>
+          (descending ? -1 : 1) * a.distance.compareTo(b.distance));
     }
     lst.sublist(min(lst.length, n));
     return lst;
@@ -57,38 +61,37 @@ class fb {
     Firestore.instance.document(path).delete();
   }
 
-  static updateServiceProviderStars(ServiceProvider sv, User us, int num_stars) {
-      String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
-      DocumentReference dr = Firestore.instance.document(path);
-      dr.get().then((out) {
-        sv.number_rates = out["number_rates"] - prev(sv, us, "stars");
-        sv.average_rating = (out["average_rating"] * sv.number_rates + num_stars) /
-                (sv.number_rates + 1);
-        sv.number_rates += 1;
-        dr.updateData({
-          "average_rating": sv.average_rating,
-          "number_rates": sv.number_rates
+  static updateServiceProviderStars(ServiceProvider sv, User us, int num_stars) async {
+    String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
+    DocumentReference dr = Firestore.instance.document(path);
+    dr.get().then((out) {
+      sv.number_rates = out["number_rates"] - previous(sv, us, "stars");
+      sv.average_rating = (out["average_rating"] * sv.number_rates + num_stars) / (sv.number_rates + 1);
+      sv.number_rates += 1;
+      dr.updateData({
+        "average_rating": sv.average_rating,
+        "number_rates": sv.number_rates
+      });
+    });
+    path = "Users/961-${us.phone}";
+    DocumentReference dr2 = Firestore.instance.document(path);
+    dr2.get().then((out) {
+      us.ratings = out["ratings"];
+      if (us.ratings["961-${sv.phone}"] != null)
+        us.ratings["961-${sv.phone}"]["stars"] = num_stars;
+      else
+        us.ratings.addAll({
+          "961-${sv.phone}": {"badge": 0, "stars": num_stars}
         });
-      });
-      path = "Users/961-${us.phone}";
-      DocumentReference dr2 = Firestore.instance.document(path);
-      dr2.get().then((out) {
-        us.ratings = out["ratings"];
-        if (us.ratings["961-${sv.phone}"] != null)
-          us.ratings["961-${sv.phone}"]["stars"] = num_stars;
-        else
-          us.ratings.addAll({
-            "961-${sv.phone}": {"badge": 0, "stars": num_stars}
-          });
-        dr2.updateData({"ratings": us.ratings});
-      });
+      dr2.updateData({"ratings": us.ratings});
+    });
   }
 
-  static prev(ServiceProvider sv, User us, String rate) {
-    if (us.ratings["961-${sv.phone}"]==null)
+  static previous(ServiceProvider sv, User us, String rate) {
+    if (us.ratings["961-${sv.phone}"] == null)
       return 0;
     else {
-      if(us.ratings["961-${sv.phone}"][rate]==0)
+      if (us.ratings["961-${sv.phone}"][rate] == 0)
         return 0;
       else
         return 1;
@@ -98,22 +101,22 @@ class fb {
 //  badge_index 1 or 2 or 3
   static incrementServiceProviderBadges(ServiceProvider sv, User us, int badge_index) {
     String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
-    sv.badges[badge_index - 1] += 1;
     DocumentReference dr = Firestore.instance.document(path);
     dr.get().then((out) {
-      List<int> badges = out["badges"].cast<int>();
-      badges[badge_index - 1]++;
-      dr.updateData({"badges": badges});
+      sv.badges = out["badges"].cast<int>();
+      if(previous(sv, us, "badge")==1)
+        sv.badges[us.ratings["961-${sv.phone}"]["badge"]-1] -= 1;
+      sv.badges[badge_index - 1] += 1;
+      dr.updateData({"badges": sv.badges});
     });
     path = "Users/961-${us.phone}";
     DocumentReference dr2 = Firestore.instance.document(path);
-    dr2.get().then((out) {
-      us.ratings = out["ratings"];
+    dr2.get().then((out) {us.ratings = out["ratings"];
       if (us.ratings[sv.phone] != null)
         us.ratings[sv.phone]["badge"] = badge_index;
       else
         us.ratings.addAll({
-          sv.phone: {"badge": badge_index, "stars": 0}
+          "961-${sv.phone}": {"badge": badge_index, "stars": 0}
         });
       dr2.updateData({"ratings": us.ratings});
     });
@@ -153,9 +156,11 @@ class fb {
         });
     }
     for (String s in m.keys) {
-      for(String num in m[s]) {
-        QuerySnapshot qs = await Firestore.instance.collection(s).where(
-            "phone", isEqualTo: num.split("-")[1]).getDocuments();
+      for (String num in m[s]) {
+        QuerySnapshot qs = await Firestore.instance
+            .collection(s)
+            .where("phone", isEqualTo: num.split("-")[1])
+            .getDocuments();
         if (qs.documents.length != 0)
           lst.add(ServiceProvider.fromSnapshot(qs.documents[0]));
       }
