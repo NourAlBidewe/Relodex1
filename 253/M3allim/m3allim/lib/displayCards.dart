@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:m3allim/User.dart';
 import './ServiceProvider.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import './displayServiceProvider.dart';
 
 class ServiceDisplay extends StatelessWidget {
   List<ServiceProvider> lst;
+  User u;
 
-  ServiceDisplay(list) {
+  ServiceDisplay(list, u) {
     this.lst = list;
+    this.u = u;
   }
   @override
   Widget build(BuildContext context) {
@@ -20,16 +23,10 @@ class ServiceDisplay extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => Display(element)));
+                              builder: (context) => Display(element, u)));
                     },
                     child: Container(
-                        decoration: BoxDecoration(boxShadow: [
-                          // new BoxShadow(
-                          //   color: Colors.blueGrey[50],
-                          //   blurRadius: 5.0,
-                          //   spreadRadius: 1.0,
-                          // ),
-                        ]),
+                        
                         margin: EdgeInsets.only(right: 7, left: 7, top: 5),
                         child: Card(
                             elevation: 10.0,
@@ -44,7 +41,7 @@ class ServiceDisplay extends StatelessWidget {
                                         element.name,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 20,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         textDirection: TextDirection.rtl,
@@ -54,7 +51,7 @@ class ServiceDisplay extends StatelessWidget {
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 17,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         textDirection: TextDirection.rtl,
