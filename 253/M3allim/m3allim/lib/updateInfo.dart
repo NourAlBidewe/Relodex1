@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m3allim/User.dart';
 //import 'package:firebase_auth/firebase_auth.dart';
 
 import './ServiceProvider.dart';
@@ -9,7 +10,7 @@ import './crud.dart';
 import './displayInfo.dart';
 import './displayServiceProvider.dart';
 
-ServiceProvider sv;
+
 double raty = 0;
 bool badge1 = false;
 bool badge2 = false;
@@ -27,17 +28,36 @@ String handsYellowPath = 'assets/handsYellow.png';
 const double pi = 3.1415926535897932;
 
 class UpdateInfo extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _UpdateInfo();
+
+  ServiceProvider sv;
+  User u;
+  
+  UpdateInfo(ServiceProvider s,  u) {
+    this.sv = s;
+    this.u = u;
+
   }
 
-  UpdateInfo(ServiceProvider s) {
-    sv = s;
+  @override
+  State<StatefulWidget> createState() {
+    return _UpdateInfo(sv, u);
   }
+
+  
 }
 
 class _UpdateInfo extends State<UpdateInfo> {
+     ServiceProvider sv;
+  User u; 
+
+   _UpdateInfo(ServiceProvider s,  u) {
+    this.sv = s;
+    this.u = u;
+
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
@@ -58,9 +78,10 @@ class _UpdateInfo extends State<UpdateInfo> {
           onRatingChanged: (rating) => setState(
                 () {
                   raty = rating;
-                  sv.average_rating = fb.updateServicerStars(sv, rating);
+                  //sv.average_rating = fb.updateServiceProviderStars(sv, u, rating.round());
+                  //sv.average_rating = fb.updateServicerStars(sv, rating);
                   //print(sv.average_rating);
-                 Display(sv);
+                 //Display(sv, u);
                   //Crud.update(s, map)
                   //Firestore.instance.collection('').document(‘Apple’).updateData({ ‘price’: 120, ‘quantity’: 15 });
                 },
@@ -81,9 +102,9 @@ class _UpdateInfo extends State<UpdateInfo> {
       Row(
         children: <Widget>[
           Badge(
-              DiamondPath, sv, 0, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر'),
-          Badge(crownPath, sv, 1, crownYellowPath, 'btn6', 'حلى معلم'),
-          Badge(handsPath, sv, 2, handsYellowPath, 'btn7', 'يسلموون'),
+          DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
+          Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
+          Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
         ],
       )
     ]);
