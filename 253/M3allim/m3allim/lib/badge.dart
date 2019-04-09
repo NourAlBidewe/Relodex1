@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:m3allim/User.dart';
 
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import './ServiceProvider.dart';
@@ -16,15 +17,21 @@ class Badge extends StatefulWidget {
   String tag;
   String text;
   Function f;
+  User u;
 
-  Badge(image, ssv, badgeNumy, newImage, tag, text) {
+
+
+  Badge(image, ssv, badgeNumy, newImage, tag, text, u) {
     this.imagePath = image;
     this.sv = ssv;
     this.onClicked = newImage;
     this.badgeNum = badgeNumy;
     this.tag = tag;
     this.text = text;
+    this.u = u;
   }
+
+
 
   @override
   State<StatefulWidget> createState() {
@@ -34,8 +41,9 @@ class Badge extends StatefulWidget {
         badgeNum,
         sv,
         tag,
-        text,);
+        text,u);
     }
+
 
 
 }
@@ -50,13 +58,15 @@ class _Badge extends State<Badge> {
   ServiceProvider s;
   String tag;
   String text;
+  User u;
 
 
 //  _Badge(this.imagePath, this.newImagePath, this.badgeNum, this.s, this.tag, this.text);
 
-  _Badge(image, newImage, badgeNumy, sv, tag, text, ) {
+  _Badge(image, newImage, badgeNumy, sv, tag, text, u) {
     this.imagePath = image;
     this.s = sv;
+    this.u = u;
 
     this.newImagePath = newImage;
     this.badgeNum = badgeNumy;
@@ -72,17 +82,25 @@ class _Badge extends State<Badge> {
         GestureDetector(
             onTap: () {
               setState(() {
-                if (isPressed == true) {
-                  //s.badges[badgeNum] -= 1;
-                  fb.decrementServicerBadges(s, badgeNum);
-                  isPressed = false;
-                  path = imagePath;
-                } else {
-                  //s.badges[badgeNum] += 1;
-                  fb.incrementServicerBadges(s, badgeNum);
-                  isPressed = true;
-                  path = newImagePath;
-                }
+                
+      print("HELLOOOOOOOOOOOOOOOOOOOOOOOOO");//badgeNum);
+
+                  fb.incrementServiceProviderBadges(s, u, badgeNum);
+                  
+
+                // if (isPressed == true) {
+                //   fb.decrementServiceProviderBadges(s, u, badgeNum);
+                //   //s.badges[badgeNum] -= 1;
+                //   //fb.decrementServicerBadges(s, badgeNum);
+                //   isPressed = false;
+                //   path = imagePath;
+                // } else {
+                //   fb.incrementServiceProviderBadges(s, u, badgeNum);
+                //   //s.badges[badgeNum] += 1;
+                //  // fb.incrementServicerBadges(s, badgeNum);
+                //   isPressed = true;
+                //   path = newImagePath;
+                // }
               });
             },
             child: Container(
@@ -107,7 +125,7 @@ class _Badge extends State<Badge> {
               heroTag: tag,
               backgroundColor: Colors.white,
               child: Text(
-                (s.badges[badgeNum]).toString(),
+                (s.badges[badgeNum-1]).toString(),
                 style: TextStyle(
                     color: Colors.indigo,
                     fontWeight: FontWeight.bold,
