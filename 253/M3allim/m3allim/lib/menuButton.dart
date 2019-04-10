@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import './displayCards.dart';
 import './ServiceProvider.dart';
+import './User.dart';
+import './crud.dart';
 
 
 class menubutton extends StatefulWidget {
   List<ServiceProvider> lst;
-  List<ServiceProvider> fav;
-  menubutton(this.lst, this.fav);
+  User u;
+  String category;
+  String subCategory;
+  menubutton(this.lst, this.u, this.category, this.subCategory);
   @override
   State<StatefulWidget> createState() {
-    return MenuButton(this.lst, this.fav);
+    return MenuButton(this.lst,  this.u,this.category, this.subCategory);
   }
 }
 class MenuButton extends State<menubutton>{
   List<ServiceProvider> lst;
-  List<ServiceProvider> fav;
-  List<String> _filters = ["المدينة","المسافة","التقييم"];
+  User u;
+  String category;
+  String subCategory;
+  List<String> _filters = ["المسافة","التقييم"];
   bool val2 = false;
-  MenuButton(this.lst, this.fav);
+  MenuButton(this.lst, this.u,this.category, this.subCategory);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -33,11 +39,11 @@ class MenuButton extends State<menubutton>{
                       setState(() {
                         if(this.val2 = true){
                           this.val2 = _value;
-                          ServiceDisplay(this.lst);
+                          ServiceDisplay(this.u.favorites, this.u);
                         }
                         else{
                           this.val2 = _value;
-                          print("dont show favorits" + val2.toString());
+                          ServiceDisplay(this.lst, this.u);
 
                         }
                       });
@@ -57,13 +63,19 @@ class MenuButton extends State<menubutton>{
                         }).toList(),
                         onChanged: (v) {
                           setState(() {
-                            if (v == "التقييم"){
-                              print("رتب حسب التقييم");
+                            if (v == "التقييم") {
+                              List<ServiceProvider> newlst = fb
+                                  .getnServiceProviders(
+                                  this.category, this.subCategory, 5,
+                                  "rating", true, this.u);
+                              ServiceDisplay(newlst, this.u);
+                            }else {
+                              List<ServiceProvider> newlst = fb
+                                  .getnServiceProviders(
+                                  this.category, this.subCategory, 5,
+                                  "distance", true, this.u);
+                              ServiceDisplay(newlst, this.u);
 
-                            } else if( v == "المحفظة"){
-                              print("رتب حسب المحافظة");
-                            } else {
-                              print("رتب حسب البلدة");
                             }
                           }
                           );
@@ -103,10 +115,5 @@ class MenuButton extends State<menubutton>{
 //    );
   }
   }
-
-
-
-
-
 
 
