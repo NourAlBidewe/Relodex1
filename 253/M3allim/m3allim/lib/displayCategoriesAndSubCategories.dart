@@ -7,8 +7,7 @@ import 'package:m3allim/ServiceProvider.dart';
 
 import './displayOneCategoryCard.dart';
 import './Categories.dart';
-import './designCard.dart';
-import './test.dart';
+
 
 import './crud.dart';
 import 'Doha.dart';
@@ -73,11 +72,11 @@ class _MyApp extends StatelessWidget {
                           }
                         List<ServiceProvider> prof =
                             await fb.getnServiceProviders(
-                                name, data.name, 5, 'distance', true, u);
+                                name, data.name, 5, 'rating', true, u);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Myapp(prof, u)));
+                                builder: (context) => Myapp(prof, u, name, data.name)));
                       }
                     },
                   ))
