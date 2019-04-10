@@ -1,8 +1,9 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:m3allim/User.dart';
 import './ServiceProvider.dart';
-import './MenuButton.dart';
+import './menuButton.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import './DisplayCards.dart';
 import 'youssef.dart';
@@ -12,12 +13,14 @@ import './bottomNavigator.dart';
 class Myapp extends StatelessWidget {
   List<ServiceProvider> lst;
   User u;
-   Myapp(this.lst, this.u);
+  String category;
+  String subCategory;
+   Myapp(this.lst, this.u, this.category, this.subCategory);
 
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        home: new _Myapp(lst,u));
+        home: new _Myapp(lst,u, this.category, this.subCategory));
   }
 }
 
@@ -25,7 +28,9 @@ class Myapp extends StatelessWidget {
 class _Myapp extends StatelessWidget{
    List<ServiceProvider> lst;
    User u;
-   _Myapp(this.lst, this.u);
+   String category;
+   String subCategory;
+   _Myapp(this.lst, this.u, this.category, this.subCategory);
 
    int h(){
       return 0;
@@ -49,7 +54,7 @@ class _Myapp extends StatelessWidget{
         
         //backgroundColor: Colors.white,
         body: ListView(children: [
-          menubutton(lst, lst),
+          menubutton(lst, u, category, subCategory),
           ServiceDisplay(lst, u),
         ],
         ),
