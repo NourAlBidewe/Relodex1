@@ -1,14 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import './ServiceProvider.dart';
-import './Doha.dart';
-
-
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import './Categories.dart';
 
-import 'reemApp.dart';
+import 'displayCategoriesAndSubCategories.dart';
 
 
 
@@ -49,7 +42,7 @@ void main() {
    new Categories('كهربجي', 'assets/kahrbge.jpg', []),
    new Categories('بستاني', 'assets/bostane.jpg', []),
    new Categories('خياط', 'assets/tailor.jpg', []),
-   new Categories('استاذ', 'assets/tutor.jpg', subTeacher),
+   new Categories('أستاذ', 'assets/tutor.jpg', subTeacher),
    new Categories('ديكور', 'assets/designImage.jpg', subDecor),
    new Categories('سمسار', 'assets/realEstate.jpg', []),
    new Categories('سمكري', 'assets/plumber.jpg', []),
