@@ -10,8 +10,24 @@ import './Categories.dart';
 
 
 import './crud.dart';
-import 'Doha.dart';
+import 'DisplayServiceProvidersList.dart';
 
+
+
+  getUser() async {
+    User u = User.fromSnapshot(await Firestore.instance.document("Users/961-10105360").get());
+    return u;
+  }
+
+
+  // User getUser  {
+
+  // }
+
+
+
+
+//   User u =  gety();
 
 class MyApp extends StatelessWidget{
   String name;
@@ -30,11 +46,15 @@ class MyApp extends StatelessWidget{
 
 
 class _MyApp extends StatelessWidget {
-  User u = new User(20, false, GeoPoint(11, 44), "حسام", "10341089");
+  User u = new User(20, false, GeoPoint(11, 44), "حسام", "33196876");
+  
 
   List<Categories> categoriesList;
   String name;
   _MyApp(this.categoriesList,this.name);
+
+  
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +81,7 @@ class _MyApp extends StatelessWidget {
               .map((data) => GestureDetector(
                     child: displayOneCard(data),
                     onTap: () async {
+                      User u = User.fromSnapshot(await Firestore.instance.document("Users/961-10105360").get());
                       if (data.sub.length != 0) {
                         Navigator.push(
                             context,
@@ -76,7 +97,7 @@ class _MyApp extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Myapp(prof, u, name, data.name)));
+                                builder: (context)  => DisplayServiceProvidersList(prof, u, name, data.name)));
                       }
                     },
                   ))
