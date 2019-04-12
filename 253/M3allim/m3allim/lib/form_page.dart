@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:m3allim/displayServiceProvider.dart';
-import 'package:m3allim/ServiceProvider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -42,8 +40,8 @@ class _FormPageState extends State<FormPage> {
   // print
   //ServiceProvider s = listy[0];
 
-  ServiceProvider s = ServiceProvider('بيروت', 29, 3, [1,4,8], "xx", true, ["hello"], "النجار ابو علي", 9, '12664237', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
- 
+  //ServiceProvider s = ServiceProvider('بيروت', 29, true, [1,4,8], "xx", true, ["hello"], "النجار ابو علي", 9, '12664237', 6, "blacksmiths/Blacksmiths", GeoPoint(33,33));
+   //ServiceProvider(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
 
 
   Future<void> _submit() async {
@@ -53,8 +51,8 @@ class _FormPageState extends State<FormPage> {
       print("hello");
       form.save();
       try {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => Display(s)));
+        // Navigator.push(
+        //     context, MaterialPageRoute(builder: (context) => Display(s)));
            // context, MaterialPageRoute(builder: (context) => ServiceDisplay()));
       } catch (e) {
         print(e.message);
