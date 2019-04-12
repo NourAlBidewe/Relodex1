@@ -10,6 +10,7 @@ class ActionButton extends StatelessWidget {
   Color background;
   String texty;
   Function f;
+
   ActionButton(String tagy, IconData i, Color col,Color back, String text, fun) {
     this.icon = i;
     this.tag = tag;
@@ -45,14 +46,6 @@ class ActionButton extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
         child: Column(
           children: <Widget>[
-            // FloatingActionButton(
-            //   mini: true,
-            //   heroTag: getTag(),
-            //   onPressed: f,
-            //   child: Icon(getIconData(), color: getColor(), size: 20),
-            //   backgroundColor: getBackGroundColor(),
-              
-            // ),
             GestureDetector(
               
               child: Container(
