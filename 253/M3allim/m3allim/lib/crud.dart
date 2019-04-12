@@ -61,7 +61,7 @@ class fb {
     Firestore.instance.document(path).delete();
   }
 
-  static updateServiceProviderStars(ServiceProvider sv, User us, int num_stars) async {
+  static updateServiceProviderStars(ServiceProvider sv, User us, double num_stars) async {
     String path = "${sv.prof_path.split("/")[0]}/961-${sv.phone}";
     DocumentReference dr = Firestore.instance.document(path);
     dr.get().then((out) {
