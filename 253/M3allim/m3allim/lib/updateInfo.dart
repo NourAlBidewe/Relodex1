@@ -78,12 +78,7 @@ class _UpdateInfo extends State<UpdateInfo> {
           onRatingChanged: (rating) => setState(
                 () {
                   raty = rating;
-                  //sv.average_rating = fb.updateServiceProviderStars(sv, u, rating.round());
-                  //sv.average_rating = fb.updateServicerStars(sv, rating);
-                  //print(sv.average_rating);
-                 //Display(sv, u);
-                  //Crud.update(s, map)
-                  //Firestore.instance.collection('').document(‘Apple’).updateData({ ‘price’: 120, ‘quantity’: 15 });
+                  fb.updateServiceProviderStars(sv, u, rating);
                 },
               ),
           rating: raty,
@@ -99,14 +94,79 @@ class _UpdateInfo extends State<UpdateInfo> {
             ),
           )),
       //ADD THE BADGES
-      Row(
+       Container(
+         width: MediaQuery.of(context).size.width,
+         height: MediaQuery.of(context).size.height/4,
+         child: ListView(
+         
+         scrollDirection: Axis.horizontal,
+        //  mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Badge(
           DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
           Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
           Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+          
         ],
-      )
+      ),)
+
+
+
+      // Container(
+      //   height: 300,
+      //   width: 5000,
+      //   child: ListView(
+      //     scrollDirection: Axis.horizontal,
+      //     children: <Widget>[
+      //     Badge(
+      //     DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
+      //     Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
+      //     Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+      //     //Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+      //   ]),
+        
+      // )
+
+
+
+      // ListView.builder(
+      //   scrollDirection: Axis.horizontal,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return new Row(
+      //       children: <Widget>[
+      //         Badge(
+      //     DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
+      //     Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
+      //     Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+      //     Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+      //       ],
+      //     );
+      //   }
+      // )
+
+
+      // SizedBox(
+      //   height: 300,
+      //   child: 
+      //    ListView.builder(
+      //      itemCount: 3,
+      //      //shrinkWrap: true,
+      //   scrollDirection: Axis.horizontal,
+      //   itemBuilder: (BuildContext context, int index) {
+      //     return new Row(
+      //       children: <Widget>[
+      //         Badge(
+      //     DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
+      //     Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
+      //     Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+      //    // Badge(handsPath, sv, 4, handsYellowPath, 'btn9', 'يسلموون',u),
+      //       ],
+      //     );
+      //   }
+      // ),
+      // )
+
+
     ]);
   }
 }
