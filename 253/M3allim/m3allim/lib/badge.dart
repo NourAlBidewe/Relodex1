@@ -83,10 +83,10 @@ class _Badge extends State<Badge> {
             onTap: () {
               setState(() {
                 
-      print("HELLOOOOOOOOOOOOOOOOOOOOOOOOO");//badgeNum);
-
-                  fb.incrementServiceProviderBadges(s, u, badgeNum);
-                  
+                fb.incrementServiceProviderBadges(s, u, badgeNum);
+                  // print(s.badges[0]);
+                  // print(s.badges[1]);
+                  // print(s.badges[2]);
 
                 // if (isPressed == true) {
                 //   fb.decrementServiceProviderBadges(s, u, badgeNum);
@@ -107,7 +107,7 @@ class _Badge extends State<Badge> {
               child: Column(
                 children: <Widget>[
                   Image.asset(path,
-                      width: MediaQuery.of(context).size.width/3.3,height: MediaQuery.of(context).size.width/3.3),
+                      width: MediaQuery.of(context).size.width/3, height: MediaQuery.of(context).size.width/3),
                   Container(
                     child: Text(
                       text,
