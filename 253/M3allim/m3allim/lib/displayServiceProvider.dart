@@ -6,9 +6,7 @@ import 'package:m3allim/User.dart';
 import './ServiceProvider.dart';
 import './displayInfo.dart';
 import './actions.dart';
-import './home.dart';
 import './updateInfo.dart';
-import './youssef.dart';
 import './bottomNavigator.dart';
 
 
@@ -33,6 +31,7 @@ class Display extends StatefulWidget {
 }
 
 class _Display extends State<Display> {
+ 
   User u;
   ServiceProvider sv;
   _Display(this.u, this.sv);
@@ -49,11 +48,12 @@ class _Display extends State<Display> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       home: Scaffold(
+        
         body: ListView(children: <Widget>[
 
           Image.asset('assets/mech.jpg'),
           DisplayInfo(sv),
-          Actions(sv),
+          Actions(sv,u),
           UpdateInfo(sv, u),
           CarouselSlider(
             height: 300,
