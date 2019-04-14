@@ -3,6 +3,11 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 
 class ServiceProvider {
+//  estimated size on firebase = 3220 bytes, 3.1455 KB
+//  description string size limit 200 characters
+//  images list limit 20 images (links of length 134) (or method 2: normal path)
+//  assuming half of providers will pay to have 50 images, a doc can
+//  safely take up to 200 providers.
   String name, phone, address, email = "", prof_path, description = "";
   double average_rating = 0, distance = 0;
   List<int> badges = [0, 0, 0];
@@ -14,7 +19,6 @@ class ServiceProvider {
 //  address as string, location as a function call which returns a GeoPoint object, corresponding to the address
   ServiceProvider(this.address, this.age, this.gender, this.location, this.name, this.phone, this.prof_path);
 
-//   used by database auto populator only
   ServiceProvider.fromList(List<String> lst) {
     address = lst[0];
     age = int.parse(lst[1]);
@@ -30,16 +34,6 @@ class ServiceProvider {
     number_rates = int.parse(lst[11]);
     phone = lst[12];
     prof_path = lst[13];
-  }
-  
-     String getProfession(){
-    var prof = this.prof_path;
-    List<String> listy = prof.split("/");
-    if(listy[0] == listy[1])
-      return listy[0];
-    else{
-      return listy[0] + " " + listy[1];
-    }
   }
 
   ServiceProvider.fromSnapshot(DocumentSnapshot snapshot) {
