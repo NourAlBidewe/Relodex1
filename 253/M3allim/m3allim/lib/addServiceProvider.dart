@@ -5,6 +5,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:m3allim/Categories.dart';
+import 'serviceProvider.dart';
+import './crud.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import './bottomNavigator.dart';
 
@@ -20,58 +24,13 @@ List<String> fields = [
   "age"
 ];
 
-class Servicer {
-  String name, phone, address, email, prof_path, description;
-  double average_rating;
-  List<int> badges = new List<int>(3);
-  List<String> images;
-  bool gender;
-  int age, number_rates, calls;
-  Position location;
-
-  Servicer(
-      this.address,
-      this.age,
-      this.average_rating,
-      this.badges,
-      this.calls,
-      this.description,
-      this.email,
-      this.gender,
-      this.images,
-      this.location,
-      this.name,
-      this.number_rates,
-      this.phone,
-      this.prof_path);
-  toJson() {
-    return {
-      "address": address,
-      "age": age,
-      "average_rating": average_rating,
-      "badges": badges,
-      "calls": calls,
-      "description": description,
-      "email": email,
-      "gender": gender,
-      "images": images,
-      "location": location,
-      "name": name,
-      "number_rates": number_rates,
-      "phone": phone,
-      "prof_path": prof_path
-    };
-  }
-}
-
-// var images = [
-//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Berries.jpg?alt=media&token=6b61b7b2-9375-4b58-bbcd-8116027ff260',
-//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Cup%20of%20Joe.jpg?alt=media&token=79780731-ff91-4ea3-a0d2-15f8109c7c6f',
-//   'https://firebasestorage.googleapis.com/v0/b/wen-lmaalem.appspot.com/o/Flowers.jpg?alt=media&token=df388aa2-ead2-4469-9284-d0870b027e3b'
-// ];
 
 var images = [];
 var constImage = [Image.asset("assets/insertImage.png")];
+
+int indexElement = 0;
+
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -89,6 +48,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+bool deleteConfirmed = false;
+
 class _MyHomePageState extends State<MyHomePage> {
   File _imageFile;
   static const menuItems = <String>["نجار", "طبيب", "سمكري"];
@@ -102,6 +63,10 @@ class _MyHomePageState extends State<MyHomePage> {
   final emailController = TextEditingController();
   final descriptionController = TextEditingController();
   final genderController = TextEditingController();
+  final profController = TextEditingController();
+  final addressController = TextEditingController();
+
+  PageController pagecontroller;
 
   Map<String, double> userLocation;
 
@@ -149,111 +114,35 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            CarouselSlider(
-              height: 200,
-              //autoPlayInterval: Duration(seconds: 2),
-              //autoPlay: true,
-              items: images.length == 0
-                  ? constImage.map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                            padding: EdgeInsets.only(top: 30, bottom: 30),
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            // child: Image.network(i),
-                            child: Image.asset("assets/insertImage.png"),
-                          );
-                        },
-                      );
-                    }).toList()
-                  : images.map((i) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                            padding: EdgeInsets.only(top: 30, bottom: 30),
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Image.file(i),
-                          );
-                        },
-                      );
-                    }).toList(),
+            Stack(
+              children: <Widget>[
+                GestureDetector(
+                  child: imageCarousel(),
+                  onLongPress: () {
+                    _showDeleteOption();
+                    // deleteConfirmed = false;
+                    // if(deleteConfirmed == true){
+
+                    // }
+                  },
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: iconsDisplay(Icons.camera),
+                ),
+              ],
             ),
-          Padding(
-              padding: EdgeInsets.all(10.0),
-
-              child: Theme(
-                data: ThemeData(
-                  primaryColor: Colors.deepPurple,
-                ),
-                child: TextField(               
-                controller: nameController,
-                textDirection: TextDirection.rtl,
-                autocorrect: false,
-                autofocus: true,
-                // textInputAction: ,
-                textAlign: TextAlign.right,
-                keyboardType: TextInputType.text,
-                decoration: new InputDecoration(
-                  border: OutlineInputBorder(
-                    
-                  ),        
-                  fillColor: Colors.white,
-                  filled: true,
-                  labelText: "الاسم الكامل",
-                ),
-              ),)
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Theme(
-                data: ThemeData(
-                  primaryColor: Colors.deepPurple,
-                ),
-                child: TextField(
-                controller: phoneController,
-                textDirection: TextDirection.rtl,
-                autocorrect: false,
-                autofocus: true,
-                // textInputAction: ,
-                textAlign: TextAlign.right,
-                keyboardType: TextInputType.number,
-
-                decoration: new InputDecoration(
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  filled: true,
-                  labelText: "رقم الهاتف",
-                  prefixText: '961-',
-                ),
-              ),)
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Theme(
-                data: ThemeData(primaryColor: Colors.deepPurple,),
-                child: TextField(
-                controller: emailController,
-                textDirection: TextDirection.rtl,
-                autocorrect: false,
-                autofocus: true,
-                // textInputAction: ,
-                textAlign: TextAlign.right,
-                keyboardType: TextInputType.emailAddress,
-
-                decoration: new InputDecoration(
-                  border: OutlineInputBorder(),
-                  fillColor: Colors.white,
-                  filled: true,
-                  labelText: "البريد الالكتروني",
-                ),
-              ),
-              )
-            ),
-
+            typer("Name", nameController, "", TextInputType.text),
+            typer("phone", phoneController, "961-", TextInputType.phone),
+            typer("description", descriptionController, "", TextInputType.text),
+            typer("address", addressController, "", TextInputType.text),
+            FlatButton(
+                child: Text(profController.text),
+                onPressed: (){
+                    handle(listy);
+                    setState(() {                   
+                    });
+                }),
             ListTile(
               trailing: DropdownButton(
                 value: _selectedMenuValue,
@@ -285,35 +174,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                     padding:
                         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
-                    child: IconButton(
-                      iconSize: 70.0,
-                      icon: Icon(
-                        Icons.gps_fixed,
-                        color: Colors.deepPurple,
-                      ),
-                      onPressed: () async {
-                        // var x = _getLocation();
-                        position = await Geolocator().getCurrentPosition(
-                            desiredAccuracy: LocationAccuracy.high);
-                        print("Entered GPS Button");
-                        print(position);
-                      },
-                    )
-                    // Align(alignment: Alignment.bottomRight,),
-                    ),
-                Padding(
-                    padding:
-                        EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
-                    child: IconButton(
-                      iconSize: 70.0,
-                      icon: Icon(
-                        Icons.camera,
-                        color: Colors.deepPurple,
-                      ),
-                      onPressed: () {
-                        _pickImageFromCamera();
-                      },
-                    )),
+                    child: iconsDisplay(Icons.gps_fixed)),
+                // Padding(
+                //     padding:
+                //         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
+                //     child: iconsDisplay(Icons.camera)),
               ],
             ),
             Padding(
@@ -326,28 +191,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: Text("Arsel"),
                         highlightElevation: 2.0,
                         onPressed: () {
-                          Servicer p = new Servicer(
-                              "",
+                          ServiceProvider p = new ServiceProvider(
+                              addressController.text,
                               23,
-                              4,
-                              [],
-                              3,
-                              "Kabirr",
-                              emailController.text,
                               true,
-                              images,
-                              Position(),
+                              GeoPoint(0, 0),
                               nameController.text,
-                              4,
                               phoneController.text,
-                              "teacher");
-                          String path = (p is Servicer)
-                              ? "Users"
-                              : "Service providers/" + p.prof_path;
-                          Firestore.instance
-                              .document(path + "/961-${p.phone}")
-                              .setData(p.toJson());
-                          // retreiveContents(textEditingControllers);
+                              profController.text,
+                              
+                              );
+                              print(nameController.text);
+                              print(addressController.text);
+                              print(phoneController.text);
+                              print(profController.text);
+                              p.description = descriptionController.text;
+                              // p.images = images;
+                              fb.add(p);
                         }),
                   ),
                 ],
@@ -357,6 +217,140 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       bottomNavigationBar: bottomNavigator(),
+    );
+  }
+
+  void handle(List<Categories> lst){
+    popUp(context, lst);
+    getPath();
+
+  }
+String path = '';
+String  catName = '';
+String subCatName = '';
+
+getPath(){
+  if(catName==''){
+    path = subCatName + '/' + subCatName;
+  }
+  else{
+    path = catName +'/' +subCatName;
+  }
+  profController.text = path;
+}
+
+
+
+
+
+  Future<bool> popUp(context, List<Categories> listy) {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context){        
+        return AlertDialog(
+        title: const Text('Select Job'),
+        content: new Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                  height: 300,
+                  width: 300,
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: listy
+                        .map((data) => GestureDetector(
+                              child: textRetriever(data),
+                              onTap: () {
+                                setState(() {
+                                  if (data.sub.length != 0) {
+                                    catName = data.name;
+                                    Navigator.of(context).pop(true);
+                                    popUp(context, data.sub);
+                                  } else {
+                                    subCatName = data.name;
+                                    // profController.text = data.name;
+                                    Navigator.of(context).pop(true);
+                                    
+                                  }
+                                  getPath();
+                                }
+                                );
+                              },
+                            ))
+                        .toList(),
+                  ))
+            ]));
+      }
+    );
+  }
+
+
+  Widget _showDeleteOption() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            // content: Expanded(
+            content: FlatButton(
+              // child: Text("Delete"),
+              onPressed: () {
+                if (images.length != 0) {
+                  images.removeAt(indexElement);
+                  deleteConfirmed = true;
+                  Navigator.pop(context);
+                  print(deleteConfirmed);
+                } else {
+                  toastMessage("Nothing to Delete");
+                  deleteConfirmed = false;
+                  Navigator.pop(context);
+                  // Navigator.pop(context);
+                }
+              },
+              child: Text("Delete"),
+            ),
+          );
+        });
+  }
+
+  Widget iconsDisplay(IconData type) {
+    return IconButton(
+      alignment: Alignment.topRight,
+      iconSize: 50,
+      icon: Icon(
+        type,
+        color: Colors.black,
+      ),
+      onPressed: () async {
+        if (type == Icons.camera) {
+          _pickImageFromCamera();
+        } else {
+          position = await Geolocator()
+              .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        }
+      },
+    );
+  }
+
+  Widget typer(String text, TextEditingController myController, String pref,
+      TextInputType keyboard) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: TextField(
+        controller: myController,
+        textDirection: TextDirection.rtl,
+        autocorrect: false,
+        autofocus: true,
+        textAlign: TextAlign.right,
+        keyboardType: keyboard,
+        decoration: new InputDecoration(
+          border: OutlineInputBorder(),
+          fillColor: Colors.white,
+          filled: true,
+          labelText: text,
+          prefixText: pref,
+        ),
+      ),
     );
   }
 
@@ -370,43 +364,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return content;
   }
 
-  Widget typer(String text) {
-    var myController = TextEditingController();
-    // textEditingControllers.add(myController);
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: TextField(
-        controller: myController,
-        textDirection: TextDirection.rtl,
-        autocorrect: false,
-        autofocus: true,
-        // textInputAction: ,
-        textAlign: TextAlign.right,
-        // keyboardType: TextInputType.datetime,
-
-        decoration: new InputDecoration(
-          border: OutlineInputBorder(),
-          fillColor: Colors.white,
-          filled: true,
-          labelText: text,
-          prefixText: text == " رقم الهاتف" ? "961-" : "",
-        ),
-      ),
-    );
-  }
-
-  List<Widget> listmywidgets(List fields) {
-    List<Widget> list = new List();
-    for (var i in fields) {
-      list.add(typer(i));
-    }
-    return list;
-  }
+  // List<Widget> listmywidgets(List fields) {
+  //   List<Widget> list = new List();
+  //   for (var i in fields) {
+  //     list.add(typer(i));
+  //   }
+  //   return list;
+  // }
 
   Future<Null> _pickImageFromGallery() async {
     final File imageFile =
         await ImagePicker.pickImage(source: ImageSource.gallery);
     setState(() => this._imageFile = imageFile);
+    if (imageFile != null) {
+      images.add(imageFile);
+    }
   }
 
   Future<Null> _pickImageFromCamera() async {
@@ -414,6 +386,139 @@ class _MyHomePageState extends State<MyHomePage> {
         await ImagePicker.pickImage(source: ImageSource.camera);
     // print("Acess");
     setState(() => this._imageFile = imageFile);
-    images.add(imageFile);
+    if (imageFile != null) {
+      images.add(imageFile);
+    }
+  }
+
+  int indexedPage = indexElement;
+
+  Widget imageCarousel() {
+    return images.length != 0
+        ? CarouselSlider(
+            height: 200,
+            //autoPlayInterval: Duration(seconds: 2),
+            //autoPlay: true,
+            onPageChanged: (index) {
+              setState(() {
+                indexElement = index;
+                if (deleteConfirmed == true) {
+                  indexedPage++;
+                  // pagecontroller.previousPage(duration: Duration(milliseconds: 0), curve: Curves.bounceIn);
+                }
+                print("Index Element ${indexElement}    Index: ${index}");
+              });
+            },
+            initialPage: indexedPage,
+            items: images.map((i) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    padding: EdgeInsets.only(top: 10),
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    child: Image.file(i),
+                  );
+                },
+              );
+            }).toList(),
+          )
+        : Align(
+            alignment: Alignment.center,
+            //child: Image.asset("assets/insertImage.png"),
+          );
+  }
+
+  Widget toastMessage(String toastMessage) {
+    Fluttertoast.showToast(
+        msg: toastMessage,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  static List<Categories> subDoctor = [
+    new Categories("قلب", 'assets/hearty.jpg', []),
+    new Categories("جهاز هضمي", 'assets/hadme.jpg', []),
+    new Categories("نسائي", 'assets/women.jpg', []),
+    new Categories("جلد", 'assets/skin.jpg', []),
+    new Categories("اسنان", 'assets/tooth.jpg', []),
+    new Categories("صحة عامة", 'assets/hearty.jpg', []),
+  ];
+
+  static List<Categories> subDecor = [
+    new Categories("اثاث", 'assets/furniture.jpg', []),
+    new Categories("دهان", 'assets/furniture.jpg', []),
+    new Categories("مهندس ديكور", 'assets/furniture.jpg', []),
+  ];
+
+  static List<Categories> subTeacher = [
+    new Categories("ابتدائي", 'assets/elementary.jpg', []),
+    new Categories("تمهيدي", 'assets/elementary.jpg', []),
+    new Categories("متوسط", 'assets/midSchool.jpg', []),
+    new Categories("ثانوي", 'assets/highSchool.jpg', []),
+    new Categories("جامعي", 'assets/uniStudent.jpg', []),
+  ];
+
+  static List<Categories> halak = [
+    new Categories("للرجال", 'assets/barbermen.jpg', []),
+    new Categories("للنساء", 'assets/barberwomen.jpg', [])
+  ];
+
+  List<Categories> listy = [
+    new Categories('طبيب', 'assets/doctor.jpg', subDoctor),
+    new Categories('حداد', 'assets/hadad.jpg', []),
+    new Categories('كهربجي', 'assets/kahrbge.jpg', []),
+    new Categories('بستاني', 'assets/bostane.jpg', []),
+    new Categories('خياط', 'assets/tailor.jpg', []),
+    new Categories('استاذ', 'assets/tutor.jpg', subTeacher),
+    new Categories('ديكور', 'assets/designImage.jpg', subDecor),
+    new Categories('سمسار', 'assets/realEstate.jpg', []),
+    new Categories('سمكري', 'assets/plumber.jpg', []),
+    new Categories('قندرجي', 'assets/shoe.jpg', []),
+    new Categories('حلاق', 'assets/hdresser.jpg', halak),
+    new Categories('مصور', 'assets/photo.jpg', []),
+    new Categories('عامل', 'assets/kahrbge.jpg', []),
+  ];
+
+}
+
+class textRetriever extends StatefulWidget {
+  Categories jobKind;
+
+  textRetriever(this.jobKind);
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _textRetriever(this.jobKind);
   }
 }
+
+class _textRetriever extends State<textRetriever> {
+  Categories jobKind;
+
+  _textRetriever(this.jobKind);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 3,
+      child: Center(child: Text(
+        jobKind.name,
+        textAlign: TextAlign.right,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),),
+    );
+  }
+}
+
+
+
+
+
+
+
