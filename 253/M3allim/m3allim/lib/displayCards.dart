@@ -14,6 +14,7 @@ class ServiceDisplay extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     return Column(
         children: this
                 .lst
@@ -25,36 +26,50 @@ class ServiceDisplay extends StatelessWidget {
                               builder: (context) => Display(element, u)));
                     },
                     child: Container(
-                        
-                        margin: EdgeInsets.only(right: 7, left: 7, top: 5),
-                        child: Card(
-                            elevation: 10.0,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: <Widget>[ 
-                                Padding(
-                                  padding: EdgeInsets.only(top: 10, bottom: 10, right: 15),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Text(
-                                        element.name,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textDirection: TextDirection.rtl,
+                margin: EdgeInsets.only(right: 7, left: 7, top: 5),
+                child: Card(
+                    elevation: 10.0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(
+                              top: 10, bottom: 10, right: 15),
+                          child: Column(
+                            children: <Widget>[
+                              Text(
+                                element.name,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width/2.5,
+                                //     MediaQuery.of(context).size.width / 8,
+                                //alignment: Alignment.center,
+                                // child: Container(
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: <TextSpan>[
+                                      TextSpan(text: element.address),
+                                    ],
+                                  ),
+                                ),
+                                        // ),
                                       ),
-                                      Text(
-                                        element.address,
-                                        textAlign: TextAlign.right,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textDirection: TextDirection.rtl,
-                                      ),
+                                      // Text(
+                                      //   element.address,
+                                      //   textAlign: TextAlign.right,
+                                      //   style: TextStyle(
+                                      //     color: Colors.black,
+                                      //     fontSize: 15,
+                                      //     fontWeight: FontWeight.bold,
+                                      //   ),
+                                      //   textDirection: TextDirection.rtl,
+                                      // ),
                                       Container(
                                         height: 50,
                                         width: 150,
@@ -69,8 +84,7 @@ class ServiceDisplay extends StatelessWidget {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 10),
-                                  child: 
-                                  Image.asset(
+                                  child: Image.asset(
                                     "assets/mech.jpg",
                                     alignment: Alignment.centerRight,
                                     width: 100.0,
