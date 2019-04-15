@@ -38,20 +38,10 @@ class _Actions extends State<Actions> {
   Widget build(BuildContext context) {
     return Container(
         //alignment: ,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height / 6,
+        //width: MediaQuery.of(context).size.width,
+       // height: MediaQuery.of(context).size.height / 6,
         padding: EdgeInsets.only(right: MediaQuery.of(context).size.width/20),
         child: chooseRightActionButtons(sv, u),
-          // child: Row(mainAxisAlignment: MainAxisAlignment.center
-          //     ,
-          //     children: <Widget>[
-                
-          //       //ActionButton('btn1', Icons.edit, Colors.black38 ,Colors.white,'عدل', hello), //EDIT PAGE
-          //   //ActionButton('btn3', Icons.person, Colors.black38,Colors.white, 'هذا انا',hello),
-          //   ActionButton('btn2', Icons.favorite, Colors.redAccent,Colors.white,'مفضل', booga),
-          //   ActionButton('btn9', Icons.phone, Colors.green ,Colors.white,'اتصل', _launchcaller),
-
-          // ]),
         );
   }
 }
