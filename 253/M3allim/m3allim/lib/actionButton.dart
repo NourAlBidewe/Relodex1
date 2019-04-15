@@ -10,14 +10,17 @@ class ActionButton extends StatelessWidget {
   Color background;
   String texty;
   Function f;
+  bool change;
 
-  ActionButton(String tagy, IconData i, Color col,Color back, String text, fun) {
+  ActionButton(String tagy, IconData i, Color col, Color back, String text, fun,
+      bool change) {
     this.icon = i;
     this.tag = tag;
     this.c = col;
-     this.background = back;
+    this.background = back;
     this.texty = text;
-    this. f = fun;
+    this.f = fun;
+    this.change = change;
   }
 
   Color getColor() {
@@ -40,6 +43,20 @@ class ActionButton extends StatelessWidget {
     return this.texty;
   }
 
+  BoxDecoration setBoarder() {
+    if (change) {
+      return BoxDecoration(
+        border: Border.all(width: 3, color: getColor()),
+        shape: BoxShape.circle,
+      );
+    } else {
+      return BoxDecoration(
+        border: Border.all(width: 1, color: getColor()),
+        shape: BoxShape.circle,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,31 +64,17 @@ class ActionButton extends StatelessWidget {
         child: Column(
           children: <Widget>[
             GestureDetector(
-              
               child: Container(
-                //color: Colors.black,
                 width: 50,
                 height: 50,
-                decoration: BoxDecoration(
-                 border: Border.all(width: 1,color: getColor()),
-                 //borderRadius: BorderRadius.circular(100),
-                 shape: BoxShape.circle,
-                 //color: getColor(),
-                 //backgroundBlendMode: BlendMode.clear,
-
-
-
+                decoration: setBoarder(),
+                child: Icon(getIconData(), color: getColor(), size: 20),
               ),
-
-              child: Icon(getIconData(), color: getColor(), size: 20),
-              ),
-              // 
+              //
               onTap: f,
-              
             ),
-
             Padding(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.only(bottom: 5, top: 5),
                 child: Text(getText(),
                     style:
                         TextStyle(fontSize: 15, fontWeight: FontWeight.bold)))
