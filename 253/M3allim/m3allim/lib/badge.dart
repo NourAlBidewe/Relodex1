@@ -83,7 +83,7 @@ class _Badge extends State<Badge> {
             onTap: () {
               setState(() {
                 
-                fb.incrementServiceProviderBadges(s, u, badgeNum);
+                //s.badges[badgeNum-1] = fb.incrementServiceProviderBadge(s, u, badgeNum, true);
                   // print(s.badges[0]);
                   // print(s.badges[1]);
                   // print(s.badges[2]);
@@ -107,27 +107,32 @@ class _Badge extends State<Badge> {
               child: Column(
                 children: <Widget>[
                   Image.asset(path,
-                      width: MediaQuery.of(context).size.width/3, height: MediaQuery.of(context).size.width/3),
+                      width: MediaQuery.of(context).size.width/3.3, height: MediaQuery.of(context).size.width/3.3),
                   Container(
-                    child: Text(
-                      text,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                  )
+                    alignment: Alignment.center,
+              child: Text.rich(
+                TextSpan(
+                  children: <TextSpan>[
+                    TextSpan(text: text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                  ],
+                ),
+              ),
+              width: MediaQuery.of(context).size.width/3.3,
+              // height: MediaQuery.of(context).size.width/3.3,
+            ),
                 ],
               ),
             )),
         Positioned(
-          right: 0,
-          top: 0,
+          right: -3,
+          top: -3,
           child: FloatingActionButton(
               heroTag: tag,
               backgroundColor: Colors.white,
               child: Text(
                 (s.badges[badgeNum-1]).toString(),
                 style: TextStyle(
-                    color: Colors.indigo,
+                    color: Colors.purple,
                     fontWeight: FontWeight.bold,
                     fontSize: 20),
               ),
