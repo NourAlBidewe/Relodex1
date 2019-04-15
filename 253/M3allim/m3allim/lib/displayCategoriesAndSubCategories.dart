@@ -14,20 +14,13 @@ import 'DisplayServiceProvidersList.dart';
 
 
 
-  getUser() async {
-    User u = User.fromSnapshot(await Firestore.instance.document("Users/961-10105360").get());
-    return u;
-  }
-
-
-  // User getUser  {
-
+  // getUser() async {
+  //   User u = User.fromSnapshot(await Firestore.instance.document("Users/961-33196876").get());
+  //   return u;
   // }
 
 
 
-
-//   User u =  gety();
 
 class MyApp extends StatelessWidget{
   String name;
@@ -46,7 +39,8 @@ class MyApp extends StatelessWidget{
 
 
 class _MyApp extends StatelessWidget {
-  User u = new User(20, false, GeoPoint(11, 44), "حسام", "33196876");
+  User u = new User(20, false, GeoPoint(11, 44), "حسام", "14039903");
+  
   
 
   List<Categories> categoriesList;
@@ -81,13 +75,14 @@ class _MyApp extends StatelessWidget {
               .map((data) => GestureDetector(
                     child: displayOneCard(data),
                     onTap: () async {
-                      User u = User.fromSnapshot(await Firestore.instance.document("Users/961-10105360").get());
+                      //User u = User.fromSnapshot(await Firestore.instance.document("Users/961-10105360").get());
                       if (data.sub.length != 0) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => MyApp(data.sub,data.name)));
                       } else {
+                        print('helloo');
                           if(name.isEmpty){
                             name = data.name;
                           }
