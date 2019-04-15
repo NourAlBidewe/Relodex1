@@ -6,8 +6,6 @@ class ServiceProvider {
 //  estimated size on firebase = 3220 bytes, 3.1455 KB
 //  description string size limit 200 characters
 //  images list limit 20 images (links of length 134) (or method 2: normal path)
-//  assuming half of providers will pay to have 50 images, a doc can
-//  safely take up to 200 providers.
   String name, phone, address, email = "", prof_path, description = "";
   double average_rating = 0, distance = 0;
   List<int> badges = [0, 0, 0];
@@ -34,16 +32,6 @@ class ServiceProvider {
     number_rates = int.parse(lst[11]);
     phone = lst[12];
     prof_path = lst[13];
-  }
-  
-    String getProfession(){
-    var prof = this.prof_path;
-    List<String> listy = prof.split("/");
-    if(listy[0] == listy[1])
-      return listy[0];
-    else{
-      return listy[0] + " " + listy[1];
-    }
   }
 
   ServiceProvider.fromSnapshot(DocumentSnapshot snapshot) {
@@ -83,5 +71,10 @@ class ServiceProvider {
       "phone": phone,
       "prof_path": prof_path
     };
+  }
+
+  String getProfession() {
+    List<String> lst = this.prof_path.split("/");
+    return lst[0]==lst[1]?lst[0]:"${lst[0]} ${lst[1]}";
   }
 }
