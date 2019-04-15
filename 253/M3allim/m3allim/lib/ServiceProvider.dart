@@ -35,6 +35,16 @@ class ServiceProvider {
     phone = lst[12];
     prof_path = lst[13];
   }
+  
+    String getProfession(){
+    var prof = this.prof_path;
+    List<String> listy = prof.split("/");
+    if(listy[0] == listy[1])
+      return listy[0];
+    else{
+      return listy[0] + " " + listy[1];
+    }
+  }
 
   ServiceProvider.fromSnapshot(DocumentSnapshot snapshot) {
     if (snapshot["phone"] != null) {
