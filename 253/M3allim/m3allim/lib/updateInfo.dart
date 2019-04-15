@@ -15,9 +15,9 @@ double raty = 0;
 bool badge1 = false;
 bool badge2 = false;
 bool badge3 = false;
-String DiamondPath = 'assets/diamond.png';
-String crownPath = 'assets/crown.png';
-String handsPath = 'assets/hands.png';
+String DiamondPath = 'assets/dnew.png';
+String crownPath = 'assets/cnew.png';
+String handsPath = 'assets/hnew.png';
 
 String DiamondYellowPath = 'assets/diamondYellow.png';
 String crownYellowPath = 'assets/crownYellow.png';
@@ -97,15 +97,15 @@ class _UpdateInfo extends State<UpdateInfo> {
        Container(
          width: MediaQuery.of(context).size.width,
          height: MediaQuery.of(context).size.height/4,
-         child: ListView(
+         child: Row(
          
-         scrollDirection: Axis.horizontal,
-        //  mainAxisAlignment: MainAxisAlignment.start,
+         //scrollDirection: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Badge(
-          DiamondPath, sv, 1, DiamondYellowPath, 'btn5', 'شي فاخر عالاخر',u),
-          Badge(crownPath, sv, 2, crownYellowPath, 'btn6', 'احلى معلم',u),
-          Badge(handsPath, sv, 3, handsYellowPath, 'btn7', 'يسلموون',u),
+          DiamondPath, sv, 1, DiamondPath, 'btn5', 'شي فاخر عالاخر',u),
+          Badge(crownPath, sv, 2, crownPath, 'btn6', 'احلى معلم',u),
+          Badge(handsPath, sv, 3, handsPath, 'btn7', 'يسلّمون',u),
           
         ],
       ),)
