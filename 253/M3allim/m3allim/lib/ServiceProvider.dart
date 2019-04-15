@@ -73,8 +73,15 @@ class ServiceProvider {
     };
   }
 
-  String getProfession() {
-    List<String> lst = this.prof_path.split("/");
-    return lst[0]==lst[1]?lst[0]:"${lst[0]} ${lst[1]}";
+  
+    String getProfession(){
+    var prof = this.prof_path;
+    List<String> listy = prof.split("/");
+    if(listy[0] == listy[1])
+      return listy[0];
+    else{
+      return listy[0] + " " + listy[1];
+    }
   }
+
 }
