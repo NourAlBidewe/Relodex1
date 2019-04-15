@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-import 'youssef.dart';
+import 'addServiceProvider.dart';
+// import 'x.dart';
 // import './reemApp.dart';
 class bottomNavigator extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _bottomNavigator();
   }
   
