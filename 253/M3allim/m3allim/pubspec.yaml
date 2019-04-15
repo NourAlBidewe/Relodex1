@@ -18,11 +18,14 @@ dependencies:
     sdk: flutter
   #firebase_auth: ^0.8.3
   cloud_firestore: ^0.9.7
+  firebase_auth: ^0.8.4+2
+
   #firebase_auth: ^0.8.1+1
   #firebase_core: ^0.2.5
   flutter_rating: ^0.0.2
   url_launcher: ^5.0.2
   image_picker: 0.5.0+9
+  fluttertoast: ^3.0.3
   geolocator: ^3.0.1
   carousel_slider: ^1.3.0
   curved_navigation_bar: ^0.1.2 #latest version
@@ -56,9 +59,8 @@ flutter:
     - assets/diamondYellow.png
     - assets/handsYellow.png
     - assets/crownYellow.png
-    - assets/logo.png
+    - assets/logo.PNG
     - assets/mech.jpg
-    - assets/doctor.jpg
     - assets/general.jpg
     - assets/immune.jpg
     - assets/nerve.jpg
@@ -66,7 +68,6 @@ flutter:
     - assets/skin.jpg
     - assets/tooth.jpg
     - assets/women.jpg
-    - assets/heart.jpg
     - assets/hadme.jpg
     - assets/barbermen.jpg
     - assets/constructor.jpg
@@ -78,7 +79,32 @@ flutter:
     - assets/mechanic.jpg
     - assets/kahrbge.jpg
     - assets/hadad.jpg
-    - assets/insertImage.png
+    - assets/hearty.jpg
+    - assets/doctor.jpg
+    - assets/furniture.jpg
+    - assets/highSchool.jpg
+    - assets/designImage.jpg
+    - assets/elementary.jpg
+    - assets/tutor.jpg
+    - assets/midSchool.jpg
+    - assets/uniStudent.jpg
+    - assets/dahan.jpg
+    - assets/plumber.jpg
+    - assets/photo.jpg
+    - assets/realEstate.jpg
+    - assets/shoe.jpg
+    - assets/bostani.jpeg
+    - assets/handy.png
+    - assets/crowny.png
+    - assets/diamondy.png
+    - assets/hnew.png
+    - assets/dnew.png
+    - assets/cnew.png
+    - assets/ballat.jpg
+
+    
+    
+    #- assets/insertImage.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
