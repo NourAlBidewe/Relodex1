@@ -151,10 +151,11 @@ class fb {
       else
         m.addAll({qs["favorites"][s].split("/")[0]: [s]});
     }
+    Firestore fs = Firestore.instance;
     for (String s in m.keys) {
+      CollectionReference cr = fs.collection(s);
       for (String num in m[s]) {
-        QuerySnapshot qs = await Firestore.instance
-            .collection(s).where("phone", isEqualTo: num.split("-")[1]).getDocuments();
+        QuerySnapshot qs = await cr.where("phone", isEqualTo: num.split("-")[1]).getDocuments();
         if (qs.documents.length != 0)
           lst.add(ServiceProvider.fromSnapshot(qs.documents[0]));
       }
