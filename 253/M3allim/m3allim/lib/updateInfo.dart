@@ -19,9 +19,9 @@ String DiamondPath = 'assets/dnew.png';
 String crownPath = 'assets/cnew.png';
 String handsPath = 'assets/hnew.png';
 
-String DiamondYellowPath = 'assets/diamondYellow.png';
-String crownYellowPath = 'assets/crownYellow.png';
-String handsYellowPath = 'assets/handsYellow.png';
+String DiamondYellowPath = 'assets/dnewYellow.png';
+String crownYellowPath = 'assets/cnewYellow.png';
+String handsYellowPath = 'assets/hnewYellow.png';
 
 //GIVE RATY TO USER INSTANCE
 
