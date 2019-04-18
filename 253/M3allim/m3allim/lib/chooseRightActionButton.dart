@@ -45,8 +45,9 @@ class _chooseRightActionButtons extends State<chooseRightActionButtons> {
   }
 
   displayOtherJobsByServiceProvider() async {
-    List<ServiceProvider> listy =
-        await fb.getnServiceProviders('سمكري', 'سمكري', 5, 'distance', false, u);
+    // List<ServiceProvider> listy =
+    //     await fb.getnServiceProviders('سمكري', 'سمكري', 5, 'distance', false, u);
+      List<ServiceProvider> listOfOtherJobs = await fb.getOtherJobs(sv);
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -72,9 +73,9 @@ class _chooseRightActionButtons extends State<chooseRightActionButtons> {
               width: MediaQuery.of(context).size.height / 2,
               height: MediaQuery.of(context).size.height / 2,
               child: ListView.builder(
-                itemCount: listy.length,
+                itemCount: listOfOtherJobs.length,
                 itemBuilder: (context, int) {
-                  return providerJobsCard(listy[int], u);
+                  return providerJobsCard(listOfOtherJobs[int], u);
                 },
               ),
             ),
@@ -85,14 +86,32 @@ class _chooseRightActionButtons extends State<chooseRightActionButtons> {
   void hello() {}
 
   void addFavorite() {
-    fb.addFavorite(u, sv);
+    String favoritesKey = "961-${sv.phone}-" + sv.prof_path.split('/')[1];
+    print(favoritesKey);
     setState(() {
+     if(!u.favorites.containsKey(favoritesKey)){
       changeBoarder = true;
-      final snackBar = SnackBar(
+      fb.addFavorite(u, sv);
+      final snackBar = SnackBar(duration: Duration(milliseconds: 800),
         content: Text('تمت الاضافة الى قائمة المفضلين',textDirection: TextDirection.rtl, ),
       );
       Scaffold.of(context).showSnackBar(snackBar);
+    }
+    else{
+      changeBoarder = false;
+      fb.removeFavorite(u, sv);
+      final snackBar = SnackBar(duration: Duration(milliseconds: 800),
+        content: Text('تمت الازالة من قائمة المفضلين',textDirection: TextDirection.rtl, ),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    }
+
     });
+    
+   
+      
+      
+   
   }
 
   @override
