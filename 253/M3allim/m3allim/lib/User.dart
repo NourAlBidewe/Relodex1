@@ -1,35 +1,34 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:convert';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   String name, phone;
   int age, calls = 0;
   bool gender;
-  GeoPoint location;
+  List<double> location;
   Map<dynamic, dynamic> ratings = Map(), favorites = Map();
 
-//   age, gender, name, phone from login, location from gps
   User(this.age, this.gender, this.location, this.name, this.phone);
 
-//   used by database auto populator only
   User.fromList(List<String> lst) {
     age = int.parse(lst[0]);
     calls = int.parse(lst[1]);
     favorites = json.decode(lst[2].replaceAll("'", '"'));
     gender = lst[3] == "True";
-    location = GeoPoint(double.parse(lst[4].split(",")[0]), double.parse(lst[4].split(",")[1]));
+    location = [double.parse(lst[4].split(",")[0]), double.parse(lst[4].split(",")[1])];
     name = lst[5];
     phone = lst[6];
     ratings = json.decode(lst[7].replaceAll("'", '"'));
   }
 
   User.fromSnapshot(DocumentSnapshot snapshot) {
-    if(snapshot["phone"]!=null) {
+    if (snapshot["phone"] != null) {
       age = snapshot["age"];
       calls = snapshot["calls"];
       favorites = snapshot["favorites"];
       gender = snapshot["gender"];
-      location = snapshot["location"];
+      location = snapshot["location"].cast<double>();
       name = snapshot["name"];
       phone = snapshot["phone"];
       ratings = snapshot["ratings"];
@@ -37,7 +36,7 @@ class User {
   }
 
   toJson() {
-    return {
+    return json.encode({
       "age": age,
       "calls": calls,
       "favorites": favorites,
@@ -46,6 +45,6 @@ class User {
       "name": name,
       "phone": phone,
       "ratings": ratings
-    };
+    });
   }
 }
