@@ -116,7 +116,7 @@ class _Myapp extends StatelessWidget{
           ServiceDisplay(lst, u),
         ],
         ),
-       bottomNavigationBar: bottomNavigator(),
+       bottomNavigationBar: bottomNavigator(u),
         );
   }
 
