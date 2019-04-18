@@ -83,6 +83,19 @@ class _Badge extends State<Badge> {
             onTap: () {
               setState(() {
                 
+                fb.incrementServiceProviderBadges(s, u, badgeNum);
+                // print(badgy);
+                // if(badgy==1){
+                //   path = newImagePath;
+                // }
+                // if(badgy==0){
+                //   path = imagePath;
+                // }
+                // else{
+                //   Scaffold.of(context).showSnackBar(new SnackBar(duration: Duration(milliseconds: 400),
+                //       content: Text('يمكنك اعطاء شارة واحدة فقط',),
+                //   ));
+                // }
                 //s.badges[badgeNum-1] = fb.incrementServiceProviderBadge(s, u, badgeNum, true);
                   // print(s.badges[0]);
                   // print(s.badges[1]);
