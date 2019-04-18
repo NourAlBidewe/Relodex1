@@ -6,13 +6,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:m3allim/Categories.dart';
+import 'package:m3allim/User.dart';
+import 'package:m3allim/googleMap.dart';
 import 'serviceProvider.dart';
 import './crud.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import './bottomNavigator.dart';
 
-void main() => runApp(MyApp());
+// void main() => runApp(MyApp(u));
 
 List<String> fields = [
   "name",
@@ -33,24 +35,34 @@ int indexElement = 0;
 
 
 class MyApp extends StatelessWidget {
+  User u;
+  MyApp(this.u);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyHomePage(),
+      home: MyHomePage(u),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+
+    User u;
+      MyHomePage(this.u);
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(u);
 }
 
 bool deleteConfirmed = false;
 
+
+
 class _MyHomePageState extends State<MyHomePage> {
+  User u;
+   _MyHomePageState(this.u);
+
   File _imageFile;
   static const menuItems = <String>["نجار", "طبيب", "سمكري"];
   static const genterTypes = <String>["انثى", "ذكر"];
@@ -67,7 +79,6 @@ class _MyHomePageState extends State<MyHomePage> {
   final addressController = TextEditingController();
 
   PageController pagecontroller;
-
   Map<String, double> userLocation;
 
   final List<DropdownMenuItem<String>> _dropMenuItems = menuItems
@@ -137,6 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
             typer("description", descriptionController, "", TextInputType.text),
             typer("address", addressController, "", TextInputType.text),
             FlatButton(
+                
                 child: Text(profController.text),
                 onPressed: (){
                     handle(listy);
@@ -174,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Padding(
                     padding:
                         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
-                    child: iconsDisplay(Icons.gps_fixed)),
+                    child: iconsDisplay(Icons.gps_fixed, )),
                 // Padding(
                 //     padding:
                 //         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
@@ -216,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      bottomNavigationBar: bottomNavigator(),
+      bottomNavigationBar: bottomNavigator(u),
     );
   }
 
@@ -325,6 +337,7 @@ getPath(){
         if (type == Icons.camera) {
           _pickImageFromCamera();
         } else {
+          // Navigator.push(context, MaterialPageRoute(builder: (context)=> Gmap()));
           position = await Geolocator()
               .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         }
