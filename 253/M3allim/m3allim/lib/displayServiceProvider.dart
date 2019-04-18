@@ -192,7 +192,7 @@ class _Display extends State<Display> {
               )
             ],
           ),
-          bottomNavigationBar: bottomNavigator()),
+          bottomNavigationBar: bottomNavigator(u)),
     );
   }
 }
