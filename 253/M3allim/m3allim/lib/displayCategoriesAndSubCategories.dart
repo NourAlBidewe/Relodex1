@@ -11,58 +11,128 @@ import './Categories.dart';
 import './crud.dart';
 import 'DisplayServiceProvidersList.dart';
 
-// getUser() async {
-//   User u = User.fromSnapshot(await Firestore.instance.document("Users/961-33196876").get());
-//   return u;
+// class MyApp extends StatelessWidget {
+//   String name; //the name is tabeeb
+//   List<Categories> listCategories;
+//   MyApp(this.listCategories, this.name);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return new MaterialApp(
+//       home: _MyApp(this.listCategories, this.name),
+//     );
+//   }
 // }
 
-class MyApp extends StatelessWidget {
+// class MyApp extends StatelessWidget{
+//    String name; //the name is tabeeb
+//   List<Categories> listCategories;
+//   MyApp(this.listCategories, this.name);
+//   @override
+//   Widget build(BuildContext context) {
+    
+//     return MaterialApp(home: App(listCategories, name),);
+//   }
+
+  
+// }
+
+
+class MyApp extends StatefulWidget{
   String name; //the name is tabeeb
   List<Categories> listCategories;
   MyApp(this.listCategories, this.name);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(home: _MyApp(listCategories, name));
-  }
+  State<StatefulWidget> createState() {
+     
+      return _MyApp(this.listCategories, this.name);  
+  
+  }    
 }
 
-class _MyApp extends StatelessWidget {
-  // User u = new User(20, false, [10, 11], "حسام", "10010551");
-  User u;
 
+class _MyApp extends State<MyApp>{
+  final TextEditingController txtEditor = new TextEditingController();
+  User u = new User(20, false, [10, 11], "حسام", "10010551");
   List<Categories> categoriesList;
   String name;
-  _MyApp(this.categoriesList, this.name);
+  List<Categories> temp ;
+  _MyApp( list1, nm){
+    this.categoriesList = list1;
+     this.name = nm;
+     temp = list1;
+      }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            color: Colors.white,
-            iconSize: 17.0,
-            onPressed: () {},
+        title: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 7.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: Container(
+                  width: 250,
+                  height: 38,
+                  decoration: BoxDecoration(
+                    color: Color.fromARGB(220, 220, 208, 255),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)
+                  ),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10.0,vertical: 0.1),
+                child: TextField(
+                  controller: txtEditor,
+                  onChanged: (newValue){
+                  if(newValue != null){
+                    temp= [];
+                    for(int i = 0; i < categoriesList.length; i++){
+                      if(categoriesList[i].name.contains(newValue)){
+                        temp.add(categoriesList[i]);
+                      }
+                    }                 
+                    } else{
+                      temp = new List<Categories>.from(categoriesList);
+                    }
+                    setState(() { 
+                    });
+                    
+                  },
+                  decoration: InputDecoration(
+                    hintText: "ابحث عن الفئة",
+                    hintStyle: TextStyle(color: Colors.grey[200]),
+                    icon: Icon(Icons.search, color: Colors.white),
+                  ),
+                ),
+              )
+               ) ],
           ),
-        ],
+        ),
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.search),
+        //     color: Colors.white,
+        //     iconSize: 17.0,
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
-      body: GridView.count(
-        crossAxisCount: 2,
+      body: GridView.extent(
+        //crossAxisCount: 2,
         padding: EdgeInsets.all(8.0),
-        crossAxisSpacing: 8.0,
+        crossAxisSpacing: 5.0,
+        maxCrossAxisExtent: 300,
         mainAxisSpacing: 5.0,
-        children: categoriesList
-            .map((data) => GestureDetector(
+        children: temp
+            ?.map((data) => GestureDetector(
                   child: displayOneCard(data),
                   onTap: () async {
-                    u = User.fromSnapshot(await Firestore.instance.document("Users/961-10010551").get());
+                   // u = User.fromSnapshot(await Firestore.instance.document("Users/961-10010551").get());
                     if (data.sub.length != 0) {
-                      // print('FROM CATEGORY TO SUBCATEGORY');
-                      // print('category name: ' + name);
-                      // print('subCategory name: ' + data.name);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -70,9 +140,6 @@ class _MyApp extends StatelessWidget {
                                   MyApp(data.sub, data.name)));
                     } else {
                       String catName = '';
-                      //  print('FROM CATEGORY TO LIST');
-                      // print('category name: ' + name);
-                      // print('subCategory name: ' + data.name);
                       if (name.isEmpty) {
                         name = data.name;
                       }
@@ -89,7 +156,7 @@ class _MyApp extends StatelessWidget {
                     }
                   },
                 ))
-            .toList(),
+            ?.toList()??[]
       ),
       bottomNavigationBar: bottomNavigator(u),
     );
