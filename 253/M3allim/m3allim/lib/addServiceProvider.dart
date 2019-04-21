@@ -146,7 +146,8 @@ class _MyHomePageState extends State<MyHomePage> {
             typer("Name", nameController, "", TextInputType.text),
             typer("phone", phoneController, "961-", TextInputType.phone),
             typer("description", descriptionController, "", TextInputType.text),
-            typer("address", addressController, "", TextInputType.text),
+            typer("Region", addressController, "", TextInputType.text),
+            typer("More Details", addressController, "", TextInputType.text),
             FlatButton(
                 
                 child: Text(profController.text),
@@ -155,18 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {                   
                     });
                 }),
-            ListTile(
-              trailing: DropdownButton(
-                value: _selectedMenuValue,
-                hint: Text(" المهنة"),
-                onChanged: (String newValue) {
-                  setState(() {
-                    _selectedMenuValue = newValue;
-                  });
-                },
-                items: _dropMenuItems,
-              ),
-            ),
             ListTile(
               trailing: DropdownButton(
                 value: _selectedGenderValue,
@@ -179,28 +168,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 items: _dropGenderItems,
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                // Align(alignment: Alignment.bottomLeft,),
-                Padding(
-                    padding:
-                        EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
-                    child: iconsDisplay(Icons.gps_fixed, )),
-                // Padding(
-                //     padding:
-                //         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
-                //     child: iconsDisplay(Icons.camera)),
-              ],
-            ),
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.center,
+//               children: <Widget>[
+//                 // Align(alignment: Alignment.bottomLeft,),
+//                 Padding(
+//                     padding:
+//                         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
+//                     child: iconsDisplay(Icons.gps_fixed, )),
+//                 // Padding(
+//                 //     padding:
+//                 //         EdgeInsets.only(top: 15.0, right: 20.0, left: 20.0),
+//                 //     child: iconsDisplay(Icons.camera)),
+//               ],
+//             ),
             Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0),
+              padding: EdgeInsets.only(left: 20.0, top: 20.0, bottom: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   ButtonTheme(
                     child: OutlineButton(
-                        child: Text("Arsel"),
+                        child: Text("Send"),
                         highlightElevation: 2.0,
                         onPressed: () {
                           ServiceProvider p = new ServiceProvider(
