@@ -32,7 +32,6 @@ class Badge extends StatefulWidget {
   }
 
 
-
   @override
   State<StatefulWidget> createState() {
     return _Badge(
@@ -50,7 +49,7 @@ class Badge extends StatefulWidget {
 
 class _Badge extends State<Badge> {
 
-  String path = "";
+  //String path = "";
   String imagePath;
   String newImagePath;
   int badgeNum;
@@ -72,70 +71,33 @@ class _Badge extends State<Badge> {
     this.badgeNum = badgeNumy;
     this.tag = tag;
     this.text = text;
-    this.path = image;
+    // this.path = image;
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget>[
-        GestureDetector(
-            onTap: () {
-              setState(() {
-                
-                fb.incrementServiceProviderBadges(s, u, badgeNum);
-                // print(badgy);
-                // if(badgy==1){
-                //   path = newImagePath;
-                // }
-                // if(badgy==0){
-                //   path = imagePath;
-                // }
-                // else{
-                //   Scaffold.of(context).showSnackBar(new SnackBar(duration: Duration(milliseconds: 400),
-                //       content: Text('يمكنك اعطاء شارة واحدة فقط',),
-                //   ));
-                // }
-                //s.badges[badgeNum-1] = fb.incrementServiceProviderBadge(s, u, badgeNum, true);
-                  // print(s.badges[0]);
-                  // print(s.badges[1]);
-                  // print(s.badges[2]);
-
-                // if (isPressed == true) {
-                //   fb.decrementServiceProviderBadges(s, u, badgeNum);
-                //   //s.badges[badgeNum] -= 1;
-                //   //fb.decrementServicerBadges(s, badgeNum);
-                //   isPressed = false;
-                //   path = imagePath;
-                // } else {
-                //   fb.incrementServiceProviderBadges(s, u, badgeNum);
-                //   //s.badges[badgeNum] += 1;
-                //  // fb.incrementServicerBadges(s, badgeNum);
-                //   isPressed = true;
-                //   path = newImagePath;
-                // }
-              });
-            },
-            child: Container(
+      children: <Widget>[            
+            Container(
               child: Column(
                 children: <Widget>[
-                  Image.asset(path,
+                  Image.asset(imagePath,
                       width: MediaQuery.of(context).size.width/3.3, height: MediaQuery.of(context).size.width/3.3),
                   Container(
                     alignment: Alignment.center,
               child: Text.rich(
                 TextSpan(
                   children: <TextSpan>[
-                    TextSpan(text: text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                    TextSpan(text: text, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
                   ],
                 ),
               ),
-              width: MediaQuery.of(context).size.width/3.3,
+              width: MediaQuery.of(context).size.width/5,
               // height: MediaQuery.of(context).size.width/3.3,
             ),
                 ],
               ),
-            )),
+            ),
         Positioned(
           right: -3,
           top: -3,
